@@ -67,27 +67,30 @@ class EditorPanel(
     private var currentStep: Step? = null
     
     init {
-        // Create tabbed pane for organizing content
-        val tabbedPane = JBTabbedPane()
+        // Simple layout with just the basic form and navigation
+        val mainPanel = JPanel(BorderLayout())
         
-        // Chỉ giữ lại Basic info tab
-        val basicInfoPanel = createBasicInfoPanel()
-        tabbedPane.addTab("Basic Info", AllIcons.General.Information, basicInfoPanel, "Basic step information")
+        // Basic form for step editing
+        val formPanel = createBasicInfoPanel()
+        mainPanel.add(formPanel, BorderLayout.CENTER)
         
-        // Navigation panel for moving between steps
+        // Navigation panel at bottom
         val navigationPanel = createNavigationPanel()
+        mainPanel.add(navigationPanel, BorderLayout.SOUTH)
         
-        // Create toolbar with actions
-        val toolbarPanel = createToolbar()
+        // Add to main layout
+        add(mainPanel, BorderLayout.CENTER)
         
-        // Main layout
-        add(toolbarPanel, BorderLayout.NORTH)
-        add(tabbedPane, BorderLayout.CENTER)
-        add(navigationPanel, BorderLayout.SOUTH)
-        
-        // Set border
+        // Simple border
         border = JBUI.Borders.empty(5)
     }
+    
+    // Getters for fields
+    fun getIdField(): JBTextField = idField
+    fun getScreenIdField(): JBTextField = screenIdField
+    fun getGuideContentArea(): JTextArea = guideContentArea
+    fun getNextStepsField(): JBTextField = nextStepsField
+    fun getIsSubStepCheckbox(): JCheckBox = isSubStepCheckbox
     
     /**
      * Create the basic information panel.
@@ -103,7 +106,7 @@ class EditorPanel(
                 preferredSize = Dimension(300, 100)
                 minimumSize = Dimension(200, 50)
             })
-            .addLabeledComponent("Next Step IDs :", nextStepsField)
+            .addLabeledComponent("Next Step IDs:", nextStepsField)
             .addComponent(isSubStepCheckbox)
             .addComponentFillVertically(JPanel(), 0)
             .panel
@@ -117,54 +120,16 @@ class EditorPanel(
     }
     
     /**
-     * Create the layout matchers panel.
+     * Create the layout matchers table.
      */
-    private fun createLayoutMatchersPanel(): JPanel {
-        val panel = JPanel(BorderLayout())
+    private fun createLayoutMatchersTable(): JBTable {
+        val columnNames = arrayOf("Target Type", "Match Value", "Match Criteria", "Highlight")
+        val tableModel = DefaultTableModel(columnNames, 0)
         
-        // Add toolbar decorator for table operations
-        val decorator = ToolbarDecorator.createDecorator(layoutMatchersTable)
-            .setAddAction { addLayoutMatcher() }
-            .setRemoveAction { removeLayoutMatcher() }
-            .setEditAction { editLayoutMatcher() }
-            .setMoveUpAction { moveLayoutMatcherUp() }
-            .setMoveDownAction { moveLayoutMatcherDown() }
-            .createPanel()
+        val table = JBTable(tableModel)
+        table.preferredScrollableViewportSize = Dimension(300, 150)
         
-        panel.add(decorator, BorderLayout.CENTER)
-        
-        // Add help text
-        val helpLabel = JBLabel("Define UI elements to target in the app screen")
-        helpLabel.border = JBUI.Borders.empty(5, 10)
-        panel.add(helpLabel, BorderLayout.NORTH)
-        
-        return panel
-    }
-    
-    /**
-     * Create the action settings panel.
-     */
-    private fun createActionPanel(): JPanel {
-        val panel = JPanel(BorderLayout())
-        
-        // Create form
-        val formPanel = FormBuilder.createFormBuilder()
-            .addLabeledComponent("Action Type:", actionTypeComboBox)
-            .addLabeledComponent("Transition Condition:", transitionConditionField)
-            .addComponentFillVertically(JPanel(), 0)
-            .panel
-            
-        // Add padding
-        formPanel.border = JBUI.Borders.empty(10)
-        
-        panel.add(formPanel, BorderLayout.CENTER)
-        
-        // Add help text
-        val helpLabel = JBLabel("Define what actions should happen in this step")
-        helpLabel.border = JBUI.Borders.empty(5, 10)
-        panel.add(helpLabel, BorderLayout.NORTH)
-        
-        return panel
+        return table
     }
     
     /**
@@ -173,26 +138,26 @@ class EditorPanel(
     private fun createNavigationPanel(): JPanel {
         val panel = JPanel(FlowLayout(FlowLayout.CENTER))
     
-        // Tạo nút Previous Step
+        // Create Previous Step button
         val prevStepButton = JButton("Previous Step").apply {
             icon = AllIcons.Actions.Back
             isEnabled = true
             addActionListener { onPreviousStep() }
         }
     
-        // Tạo nút Next Step
+        // Create Next Step button
         val nextStepButton = JButton("Next Step").apply {
             icon = AllIcons.Actions.Forward
             isEnabled = true
             addActionListener { onNextStep() }
         }
     
-        // Nút Save Changes
+        // Save Changes button
         val saveButton = JButton("Save Changes").apply {
             addActionListener { saveChanges() }
         }
     
-        // Thêm nút vào panel, sắp xếp: Prev - Save - Next
+        // Add buttons to panel
         panel.add(prevStepButton)
         panel.add(saveButton)
         panel.add(nextStepButton)
@@ -205,10 +170,13 @@ class EditorPanel(
         return panel
     }
 
-    private fun onPreviousStep() {
+    /**
+     * Navigate to the previous step
+     */
+    fun onPreviousStep() {
         val currentStep = this.currentStep ?: return
         val rule = currentRule ?: return
-        // Tìm tất cả node cha
+        // Find all parent nodes
         val parentIds = rule.steps.filter { it.nextStepIds.contains(currentStep.id) }.map { it.id }
         if (parentIds.isEmpty()) {
             JOptionPane.showMessageDialog(this, "No previous step.", "Navigation", JOptionPane.INFORMATION_MESSAGE)
@@ -227,7 +195,10 @@ class EditorPanel(
         }
     }
     
-    private fun onNextStep() {
+    /**
+     * Navigate to the next step
+     */
+    fun onNextStep() {
         val currentStep = this.currentStep ?: return
         val rule = currentRule ?: return
         val nextIds = currentStep.nextStepIds
@@ -246,34 +217,6 @@ class EditorPanel(
                 if (nextStep != null) setStep(nextStep)
             }
         }
-    }
-    
-    /**
-     * Create toolbar with actions.
-     */
-    private fun createToolbar(): JPanel {
-        val panel = JPanel(BorderLayout())
-        
-        // Chỉ giữ lại step title label
-        val titleLabel = JBLabel("Step Editor", SwingConstants.CENTER)
-        titleLabel.font = titleLabel.font.deriveFont(titleLabel.font.size + 2f)
-        titleLabel.border = JBUI.Borders.empty(5)
-        panel.add(titleLabel, BorderLayout.CENTER)
-        
-        return panel
-    }
-    
-    /**
-     * Create the layout matchers table.
-     */
-    private fun createLayoutMatchersTable(): JBTable {
-        val columnNames = arrayOf("Target Type", "Match Value", "Match Criteria", "Highlight")
-        val tableModel = DefaultTableModel(columnNames, 0)
-        
-        val table = JBTable(tableModel)
-        table.preferredScrollableViewportSize = Dimension(300, 150)
-        
-        return table
     }
     
     /**
@@ -296,133 +239,6 @@ class EditorPanel(
     }
     
     /**
-     * Add a new layout matcher.
-     */
-    private fun addLayoutMatcher() {
-        // This would open a dialog to add a new layout matcher
-        // For now just adding a placeholder row
-        val tableModel = layoutMatchersTable.model as DefaultTableModel
-        tableModel.addRow(arrayOf("text", "New Element", "equals", "click"))
-    }
-    
-    /**
-     * Remove a layout matcher.
-     */
-    private fun removeLayoutMatcher() {
-        val selectedRow = layoutMatchersTable.selectedRow
-        if (selectedRow >= 0) {
-            val tableModel = layoutMatchersTable.model as DefaultTableModel
-            tableModel.removeRow(selectedRow)
-        }
-    }
-    
-    /**
-     * Edit a layout matcher.
-     */
-    private fun editLayoutMatcher() {
-        // This would open a dialog to edit the selected layout matcher
-    }
-    
-    /**
-     * Move a layout matcher up in the list.
-     */
-    private fun moveLayoutMatcherUp() {
-        val selectedRow = layoutMatchersTable.selectedRow
-        if (selectedRow > 0) {
-            val tableModel = layoutMatchersTable.model as DefaultTableModel
-            tableModel.moveRow(selectedRow, selectedRow, selectedRow - 1)
-            layoutMatchersTable.setRowSelectionInterval(selectedRow - 1, selectedRow - 1)
-        }
-    }
-    
-    /**
-     * Move a layout matcher down in the list.
-     */
-    private fun moveLayoutMatcherDown() {
-        val selectedRow = layoutMatchersTable.selectedRow
-        val tableModel = layoutMatchersTable.model as DefaultTableModel
-        if (selectedRow >= 0 && selectedRow < tableModel.rowCount - 1) {
-            tableModel.moveRow(selectedRow, selectedRow, selectedRow + 1)
-            layoutMatchersTable.setRowSelectionInterval(selectedRow + 1, selectedRow + 1)
-        }
-    }
-    
-    /**
-     * Highlight UI elements in the mirrored screen.
-     */
-    private fun highlightUiElements() {
-        // This would trigger highlighting in the mirrored screen
-        JOptionPane.showMessageDialog(
-            this,
-            "Highlighting UI elements in mirrored screen",
-            "Highlight",
-            JOptionPane.INFORMATION_MESSAGE
-        )
-    }
-    
-    /**
-     * Navigate to the previous step in history.
-     */
-    private fun navigateToPreviousStep() {
-        if (currentHistoryIndex > 0) {
-            currentHistoryIndex--
-            val stepId = stepHistory[currentHistoryIndex]
-            // This would load the step without adding to history
-            // For now just show a message
-            JOptionPane.showMessageDialog(
-                this,
-                "Navigating to previous step: $stepId",
-                "Navigation",
-                JOptionPane.INFORMATION_MESSAGE
-            )
-        }
-        
-        updateNavigationButtons()
-    }
-    
-    /**
-     * Navigate to the next step in history.
-     */
-    private fun navigateToNextStep() {
-        if (currentHistoryIndex < stepHistory.size - 1) {
-            currentHistoryIndex++
-            val stepId = stepHistory[currentHistoryIndex]
-            // This would load the step without adding to history
-            // For now just show a message
-            JOptionPane.showMessageDialog(
-                this,
-                "Navigating to next step: $stepId",
-                "Navigation",
-                JOptionPane.INFORMATION_MESSAGE
-            )
-        }
-        
-        updateNavigationButtons()
-    }
-    
-    /**
-     * Update the enabled state of navigation buttons.
-     */
-    private fun updateNavigationButtons() {
-        prevStepButton.isEnabled = currentHistoryIndex > 0
-        nextStepButton.isEnabled = currentHistoryIndex < stepHistory.size - 1
-    }
-    
-    /**
-     * Delete the current step.
-     */
-    private fun deleteCurrentStep() {
-        // This would trigger step deletion
-        // For now just show a confirmation dialog
-        JOptionPane.showMessageDialog(
-            this,
-            "Delete step: ${currentStep?.id}",
-            "Delete Step",
-            JOptionPane.INFORMATION_MESSAGE
-        )
-    }
-    
-    /**
      * Set the step to edit.
      */
     fun setStep(step: Step) {
@@ -440,9 +256,6 @@ class EditorPanel(
         nextStepsField.text = step.nextStepIds.joinToString(", ")
         isSubStepCheckbox.isSelected = step.isSubStep
         
-        // Update action type
-        actionTypeComboBox.selectedItem = "tap" // Default to tap if no specific action is set
-        
         // Update transition condition
         transitionConditionField.text = step.transitionCondition ?: ""
         
@@ -455,6 +268,14 @@ class EditorPanel(
     }
     
     /**
+     * Update the enabled state of navigation buttons.
+     */
+    private fun updateNavigationButtons() {
+        prevStepButton.isEnabled = currentHistoryIndex > 0
+        nextStepButton.isEnabled = currentHistoryIndex < stepHistory.size - 1
+    }
+    
+    /**
      * Set the current rule for reference.
      */
     fun setRule(rule: com.example.rulemaker.model.Rule) {
@@ -464,7 +285,7 @@ class EditorPanel(
     /**
      * Save changes to the current step.
      */
-    private fun saveChanges() {
+    fun saveChanges() {
         if (currentStep == null) return
         
         val oldId = currentStep!!.id
@@ -533,6 +354,8 @@ class EditorPanel(
     
     /**
      * Create a new step with initial values.
+     * isSubStep is now managed internally via RuleMakerWindow.identifyMainPathAndSetSubSteps,
+     * but we still keep the UI control to allow manual override.
      */
     fun createNewStep(isSubStep: Boolean = false): Step {
         val newStepId = "step_${System.currentTimeMillis()}"
