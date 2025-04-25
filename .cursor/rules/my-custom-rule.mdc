@@ -1,0 +1,21 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+
+# Your rule content
+
+- Please make sure your answer is really clean, and provide your plan first so I can read it before starting to code.
+- Do not propose hard-coded fixes unless absolutely necessary.
+- be careful about the brackets, don't remove my brackets if it might cause a missing { error
+- Find the solution that has the least impact on the existing logic.
+- This is an important project that I need to submit to my boss, so please ensure it is designed beautifully, with minimal bugs, easy maintenance, and the logic is not too complicated.
+- Always double-check to avoid "Unresolved reference" errors , avoid this error: Modifier 'private' is not applicable to , Type mismatch aned No value passed for parameter when I build.
+- Whenever I report an error, please analyze it thoroughly and propose clear strategies before proceeding with the code to ensure the solution is optimal.
+- Do not hard code. Always find a way to create a generalized solution so that I can work with multiple different test cases.
+- Avoid making the connectors too colorful; I prefer them to have just one consistent color.
+
+
+
+

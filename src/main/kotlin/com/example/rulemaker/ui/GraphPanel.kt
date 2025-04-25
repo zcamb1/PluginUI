@@ -2,7 +2,6 @@ package com.example.rulemaker.ui
 
 import com.example.rulemaker.model.Rule
 import com.example.rulemaker.model.Step
-import com.intellij.icons.AllIcons
 import com.intellij.openapi.diagnostic.Logger
 import com.intellij.ui.JBColor
 import com.intellij.util.ui.JBUI
@@ -88,13 +87,11 @@ class GraphPanel(
         // Configure graph component
         graphComponent.connectionHandler.isEnabled = false
         graphComponent.setToolTips(true)
-
         
         // Set anti-aliasing for better rendering
         graphComponent.setAntiAlias(true)
         graphComponent.setTextAntiAlias(true)
-        graphComponent.verticalScrollBar.unitIncrement = 7
-        graphComponent.horizontalScrollBar.unitIncrement = 7
+        
         // Set background color
         graphComponent.setBackground(JBColor(Color(250, 250, 250), Color(60, 63, 65)))
         
@@ -109,7 +106,6 @@ class GraphPanel(
         // Create panel for controls
         val controlPanel = JPanel(FlowLayout(FlowLayout.LEFT))
         controlPanel.add(debugButton)
-   
         
         // Add components to panel
         add(controlPanel, BorderLayout.NORTH)
@@ -152,7 +148,7 @@ class GraphPanel(
             }
         })
     }
- 
+    
     /**
      * Set up the stylesheet for the graph.
      */
@@ -986,12 +982,7 @@ class GraphPanel(
 
         val swapItem = JMenuItem("Swap Node")
         swapItem.addActionListener {
-            val swapId = JOptionPane.showInputDialog(
-        null, // <-- truyền null để center on screen
-        "Enter ID of node to swap with:",
-        "Swap Node",
-        JOptionPane.QUESTION_MESSAGE
-        )
+            val swapId = JOptionPane.showInputDialog(this, "Enter ID of node to swap with:", "Swap Node", JOptionPane.QUESTION_MESSAGE)
             if (swapId != null && swapId.isNotBlank()) {
                 onSwapNode(step, swapId.trim())
             }
