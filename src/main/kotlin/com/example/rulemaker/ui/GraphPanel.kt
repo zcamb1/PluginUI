@@ -2,6 +2,7 @@ package com.example.rulemaker.ui
 
 import com.example.rulemaker.model.Rule
 import com.example.rulemaker.model.Step
+import com.intellij.icons.AllIcons
 import com.intellij.openapi.diagnostic.Logger
 import com.intellij.ui.JBColor
 import com.intellij.util.ui.JBUI
@@ -63,12 +64,6 @@ class GraphPanel(
     // Store main flow path for layout
     private var mainFlowPath = listOf<String>()
     
-    // Debug button for showing connection info
-    private val debugButton = JButton("Show Debug Info").apply {
-        addActionListener {
-            showDebugInfo()
-        }
-    }
     
     init {
         // Configure graph settings
@@ -87,11 +82,13 @@ class GraphPanel(
         // Configure graph component
         graphComponent.connectionHandler.isEnabled = false
         graphComponent.setToolTips(true)
+
         
         // Set anti-aliasing for better rendering
         graphComponent.setAntiAlias(true)
         graphComponent.setTextAntiAlias(true)
-        
+        graphComponent.verticalScrollBar.unitIncrement = 7
+        graphComponent.horizontalScrollBar.unitIncrement = 7
         // Set background color
         graphComponent.setBackground(JBColor(Color(250, 250, 250), Color(60, 63, 65)))
         
@@ -105,7 +102,7 @@ class GraphPanel(
         
         // Create panel for controls
         val controlPanel = JPanel(FlowLayout(FlowLayout.LEFT))
-        controlPanel.add(debugButton)
+   
         
         // Add components to panel
         add(controlPanel, BorderLayout.NORTH)
@@ -148,114 +145,55 @@ class GraphPanel(
             }
         })
     }
-    
-    /**
-     * Set up the stylesheet for the graph.
-     */
+ 
     private fun setupStylesheet() {
         val stylesheet = graph.stylesheet
-        
-        // Main step style - Soft blue with rounded corners
-        val mainStepStyle = HashMap<String, Any>()
-        mainStepStyle[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_RECTANGLE
-        mainStepStyle[mxConstants.STYLE_PERIMETER] = mxConstants.PERIMETER_RECTANGLE
-        mainStepStyle[mxConstants.STYLE_ROUNDED] = true
-        mainStepStyle[mxConstants.STYLE_ARCSIZE] = 20 // percentage for corner rounding (increased)
-        mainStepStyle[mxConstants.STYLE_FONTSIZE] = 12
-        mainStepStyle[mxConstants.STYLE_FONTCOLOR] = "#000000"
-        mainStepStyle[mxConstants.STYLE_FILLCOLOR] = "#D4E7FF" // Light blue
-        mainStepStyle[mxConstants.STYLE_STROKECOLOR] = "#7EA6E0"
-        mainStepStyle[mxConstants.STYLE_STROKEWIDTH] = 1.5
-        mainStepStyle[mxConstants.STYLE_SHADOW] = true
-        mainStepStyle[mxConstants.STYLE_ALIGN] = mxConstants.ALIGN_CENTER
-        mainStepStyle[mxConstants.STYLE_VERTICAL_ALIGN] = mxConstants.ALIGN_MIDDLE
-        mainStepStyle["wordWrap"] = "true"
-        stylesheet.putCellStyle(MAIN_STEP_STYLE, mainStepStyle)
-        
-        // Sub step style - Changed to rectangle with rounded corners
-        val subStepStyle = HashMap<String, Any>()
-        subStepStyle[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_RECTANGLE
-        subStepStyle[mxConstants.STYLE_PERIMETER] = mxConstants.PERIMETER_RECTANGLE
-        subStepStyle[mxConstants.STYLE_ROUNDED] = true
-        subStepStyle[mxConstants.STYLE_ARCSIZE] = 20 // percentage for corner rounding
-        subStepStyle[mxConstants.STYLE_FONTSIZE] = 11
-        subStepStyle[mxConstants.STYLE_FONTCOLOR] = "#000000"
-        subStepStyle[mxConstants.STYLE_FILLCOLOR] = "#F0F0F0" // Very light gray
-        subStepStyle[mxConstants.STYLE_STROKECOLOR] = "#B0B0B0"
-        subStepStyle[mxConstants.STYLE_STROKEWIDTH] = 1.5
-        subStepStyle[mxConstants.STYLE_SHADOW] = true
-        subStepStyle[mxConstants.STYLE_ALIGN] = mxConstants.ALIGN_CENTER
-        subStepStyle[mxConstants.STYLE_VERTICAL_ALIGN] = mxConstants.ALIGN_MIDDLE
-        subStepStyle["wordWrap"] = "true"
-        stylesheet.putCellStyle(SUB_STEP_STYLE, subStepStyle)
-        
-        // Start step style - Make it more distinctive with brighter green
-        val startStepStyle = HashMap<String, Any>()
-        startStepStyle[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_RECTANGLE
-        startStepStyle[mxConstants.STYLE_PERIMETER] = mxConstants.PERIMETER_RECTANGLE
-        startStepStyle[mxConstants.STYLE_ROUNDED] = true
-        startStepStyle[mxConstants.STYLE_ARCSIZE] = 20 // percentage for corner rounding
-        startStepStyle[mxConstants.STYLE_FONTSIZE] = 12
-        startStepStyle[mxConstants.STYLE_FONTCOLOR] = "#000000"
-        startStepStyle[mxConstants.STYLE_FILLCOLOR] = "#A5D6A7" // Brighter green
-        startStepStyle[mxConstants.STYLE_STROKECOLOR] = "#2E7D32" // Darker green border
-        startStepStyle[mxConstants.STYLE_STROKEWIDTH] = 2.0 // Thicker border
-        startStepStyle[mxConstants.STYLE_SHADOW] = true
-        startStepStyle[mxConstants.STYLE_ALIGN] = mxConstants.ALIGN_CENTER
-        startStepStyle[mxConstants.STYLE_VERTICAL_ALIGN] = mxConstants.ALIGN_MIDDLE
-        startStepStyle["wordWrap"] = "true"
-        stylesheet.putCellStyle(START_STEP_STYLE, startStepStyle)
-        
-        // End step style - Changed to rectangle with rounded corners
-        val endStepStyle = HashMap<String, Any>()
-        endStepStyle[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_RECTANGLE
-        endStepStyle[mxConstants.STYLE_PERIMETER] = mxConstants.PERIMETER_RECTANGLE
-        endStepStyle[mxConstants.STYLE_ROUNDED] = true
-        endStepStyle[mxConstants.STYLE_ARCSIZE] = 20 // percentage for corner rounding
-        endStepStyle[mxConstants.STYLE_FONTSIZE] = 12
-        endStepStyle[mxConstants.STYLE_FONTCOLOR] = "#000000"
-        endStepStyle[mxConstants.STYLE_FILLCOLOR] = "#FFD2D2" // Light red
-        endStepStyle[mxConstants.STYLE_STROKECOLOR] = "#FF9999"
-        endStepStyle[mxConstants.STYLE_STROKEWIDTH] = 1.5
-        endStepStyle[mxConstants.STYLE_SHADOW] = true
-        endStepStyle[mxConstants.STYLE_ALIGN] = mxConstants.ALIGN_CENTER
-        endStepStyle[mxConstants.STYLE_VERTICAL_ALIGN] = mxConstants.ALIGN_MIDDLE
-        endStepStyle["wordWrap"] = "true"
-        stylesheet.putCellStyle(END_STEP_STYLE, endStepStyle)
-        
-        // Active step style - highlight when selected
-        val activeStepStyle = HashMap<String, Any>()
-        activeStepStyle[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_RECTANGLE
-        activeStepStyle[mxConstants.STYLE_PERIMETER] = mxConstants.PERIMETER_RECTANGLE
-        activeStepStyle[mxConstants.STYLE_ROUNDED] = true
-        activeStepStyle[mxConstants.STYLE_ARCSIZE] = 20
-        activeStepStyle[mxConstants.STYLE_FONTSIZE] = 12
-        activeStepStyle[mxConstants.STYLE_FONTCOLOR] = "#000000"
-        activeStepStyle[mxConstants.STYLE_FILLCOLOR] = "#FFE2B8" // Light orange
-        activeStepStyle[mxConstants.STYLE_STROKECOLOR] = "#FFA940"
-        activeStepStyle[mxConstants.STYLE_STROKEWIDTH] = 2.0
-        activeStepStyle[mxConstants.STYLE_SHADOW] = true
-        activeStepStyle[mxConstants.STYLE_ALIGN] = mxConstants.ALIGN_CENTER
-        activeStepStyle[mxConstants.STYLE_VERTICAL_ALIGN] = mxConstants.ALIGN_MIDDLE
-        activeStepStyle["wordWrap"] = "true"
-        stylesheet.putCellStyle(ACTIVE_STEP_STYLE, activeStepStyle)
-        
-        // Edge style - Use ONE consistent color for all edges
-        val edgeStyle = HashMap<String, Any>()
-        edgeStyle[mxConstants.STYLE_STROKECOLOR] = defaultEdgeColor // Use the default/loaded edge color
-        edgeStyle[mxConstants.STYLE_STROKEWIDTH] = 2.0 // Thicker lines
-        edgeStyle[mxConstants.STYLE_ENDARROW] = mxConstants.ARROW_CLASSIC
-        edgeStyle[mxConstants.STYLE_FONTSIZE] = 11
-        edgeStyle[mxConstants.STYLE_OPACITY] = 100 // Full opacity
-        // Use orthogonal style for right-angle connections
-        edgeStyle[mxConstants.STYLE_EDGE] = mxConstants.EDGESTYLE_ORTHOGONAL
-        // Add a small rounding to corners
-        edgeStyle[mxConstants.STYLE_ROUNDED] = true
-        edgeStyle[mxConstants.STYLE_ARCSIZE] = 15
-        // Increase size of the arrow
-        edgeStyle[mxConstants.STYLE_ENDSIZE] = 12.0
+    
+        // Helper function để tạo style node
+        fun nodeStyle(
+            fill: String,
+            stroke: String,
+            font: Int = 12,
+            width: Double = 1.5
+        ): java.util.HashMap<String, Any> {
+            val map = java.util.HashMap<String, Any>()
+            map[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_RECTANGLE
+            map[mxConstants.STYLE_PERIMETER] = mxConstants.PERIMETER_RECTANGLE
+            map[mxConstants.STYLE_ROUNDED] = true
+            map[mxConstants.STYLE_ARCSIZE] = 20
+            map[mxConstants.STYLE_FONTSIZE] = font
+            map[mxConstants.STYLE_FONTCOLOR] = "#000000"
+            map[mxConstants.STYLE_FILLCOLOR] = fill
+            map[mxConstants.STYLE_STROKECOLOR] = stroke
+            map[mxConstants.STYLE_STROKEWIDTH] = width
+            map[mxConstants.STYLE_SHADOW] = true
+            map[mxConstants.STYLE_ALIGN] = mxConstants.ALIGN_CENTER
+            map[mxConstants.STYLE_VERTICAL_ALIGN] = mxConstants.ALIGN_MIDDLE
+            map["wordWrap"] = "true"
+            return map
+        }
+    
+        // Đăng ký các style cho node
+        stylesheet.putCellStyle(MAIN_STEP_STYLE, nodeStyle("#D4E7FF", "#7EA6E0"))
+        stylesheet.putCellStyle(SUB_STEP_STYLE, nodeStyle("#F0F0F0", "#B0B0B0", font = 11))
+        stylesheet.putCellStyle(START_STEP_STYLE, nodeStyle("#A5D6A7", "#2E7D32", width = 2.0))
+        stylesheet.putCellStyle(END_STEP_STYLE, nodeStyle("#FFD2D2", "#FF9999"))
+        stylesheet.putCellStyle(ACTIVE_STEP_STYLE, nodeStyle("#FFE2B8", "#FFA940", width = 2.0))
+    
+        // Edge style
+        val edgeStyle = java.util.HashMap<String, Any>().apply {
+            put(mxConstants.STYLE_STROKECOLOR, defaultEdgeColor)
+            put(mxConstants.STYLE_STROKEWIDTH, 2.0)
+            put(mxConstants.STYLE_ENDARROW, mxConstants.ARROW_CLASSIC)
+            put(mxConstants.STYLE_FONTSIZE, 11)
+            put(mxConstants.STYLE_OPACITY, 100)
+            put(mxConstants.STYLE_EDGE, mxConstants.EDGESTYLE_ORTHOGONAL)
+            put(mxConstants.STYLE_ROUNDED, true)
+            put(mxConstants.STYLE_ARCSIZE, 15)
+            put(mxConstants.STYLE_ENDSIZE, 12.0)
+        }
         stylesheet.putCellStyle(EDGE_STYLE, edgeStyle)
-    }
+    }    
     
     /**
      * Helper method to safely get the current zoom level
@@ -370,39 +308,7 @@ class GraphPanel(
         
         // Removed explicit zoom setting here to avoid conflicts
     }
-    
-    /**
-     * Adjust the viewport to show nodes with negative coordinates
-     * without excessive zooming out
-     */
-    private fun adjustViewportForNegativeCoordinates() {
-        LOG.info("Adjusting viewport to show nodes with negative coordinates")
-        
-        // Find the minimum Y coordinate
-        var minY = 0.0
-        for (cell in stepToCellMap.values) {
-            val geo = graph.getCellGeometry(cell) ?: continue
-            minY = Math.min(minY, geo.y)
-        }
-        
-        if (minY < 0) {
-            // Adjust viewport to show negative coordinates
-            LOG.info("Found nodes with negative Y: $minY, adjusting viewport")
-            val translateY = Math.min(200, Math.abs(minY).toInt() + 50)
-            
-            // Set viewport position to show negative coordinates
-            // But don't translate too far, as that makes the view confusing
-            graphComponent.viewport.setViewPosition(java.awt.Point(0, translateY))
-            
-            // Force a redraw
-            graphComponent.refresh()
-            
-            // Removed explicit zoom setting here to avoid conflicts
-            
-            LOG.info("Adjusted viewport position for negative coordinates, translateY=$translateY")
-        }
-    }
-    
+
     /**
      * Display a rule in the graph panel.
      */
@@ -650,53 +556,6 @@ class GraphPanel(
     }
     
     /**
-     * Create direct path connections (dotted lines) between start and end nodes
-     * of alternate paths.
-     */
-    private fun createDirectPathConnections(rule: Rule) {
-        // Find nodes that have a detour from A to B through C (A->C->B)
-       return
-    }
-
-    private fun alignNodeCenters() {
-        LOG.info("Đang căn chỉnh trung tâm các node kết nối dọc...")
-        
-        // Duyệt qua tất cả các kết nối
-        currentRule?.steps?.forEach { step ->
-            val sourceCell = stepToCellMap[step.id] ?: return@forEach
-            val sourceGeo = graph.getCellGeometry(sourceCell) ?: return@forEach
-            
-            // Tìm tọa độ trung tâm của nguồn
-            val sourceCenterX = sourceGeo.x + sourceGeo.width / 2
-            
-            // Kiểm tra tất cả các node đích của step này
-            for (targetId in step.nextStepIds) {
-                val targetCell = stepToCellMap[targetId] ?: continue
-                val targetGeo = graph.getCellGeometry(targetCell) ?: continue
-                
-                // Nếu kết nối là dọc (Y khác nhau nhiều, X gần nhau)
-                val xDiff = Math.abs(sourceGeo.x - targetGeo.x)
-                val yDiff = Math.abs(sourceGeo.y - targetGeo.y)
-                
-                if (yDiff > 80 && xDiff < 100) {
-                    // Đây là kết nối dọc - căn chỉnh target với source
-                    val targetCenterX = targetGeo.x + targetGeo.width / 2
-                    
-                    // Nếu tâm không thẳng hàng, điều chỉnh vị trí target
-                    if (Math.abs(sourceCenterX - targetCenterX) > 5) {
-                        val newGeo = targetGeo.clone() as mxGeometry
-                        val newX = sourceCenterX - (targetGeo.width / 2)
-                        newGeo.x = newX
-                        
-                        graph.model.setGeometry(targetCell, newGeo)
-                        LOG.info("Đã căn chỉnh node ${targetId} theo trung tâm của ${step.id}: ${targetCenterX} -> ${sourceCenterX}")
-                    }
-                }
-            }
-        }
-    }
-    
-    /**
      * Custom layout algorithm optimized for main flow with start and end nodes.
      */
     private fun applyCustomMainFlowLayout(rule: Rule) {
@@ -716,8 +575,6 @@ class GraphPanel(
             // Step 2: Ensure all connections have proper edge routing
             ensureVerticalEdgesAligned()
             
-            // Step 3: Verify all connections are correct
-            verifyGraphConnections(rule)
             
         } finally {
             graph.model.endUpdate()
@@ -760,15 +617,9 @@ class GraphPanel(
             }
         }
 
-        
-        // Position sub-nodes along vertical axes
         positionSubNodes()
-        
-        // Update coordinate display
-        // updateCoordinateDisplay() call removed
-    }
 
-    
+    } 
     /**
      * Position sub-nodes in vertical columns relative to their connections
      */
@@ -836,100 +687,6 @@ class GraphPanel(
         // updateCoordinateDisplay() call removed
     }
     
-    
-    /**
-     * Find the best parent for a sub-step based on connections.
-     * This helps determine where to position the sub-step.
-     */
-    private fun findBestParentForSubStep(subStep: Step, rule: Rule, mainSteps: List<Step>): Step? {
-        // First priority: find a main step that connects TO this sub-step
-        val incomingMainSteps = mainSteps.filter { step -> 
-            step.nextStepIds.contains(subStep.id) 
-        }
-        
-        if (incomingMainSteps.isNotEmpty()) {
-            return incomingMainSteps.first()
-        }
-        
-        // Second priority: find a main step that this sub-step connects TO
-        val targetMainStepIds = subStep.nextStepIds.filter { nextId ->
-            mainSteps.any { it.id == nextId }
-        }
-        
-        if (targetMainStepIds.isNotEmpty()) {
-            return mainSteps.first { it.id == targetMainStepIds.first() }
-        }
-        
-        // Third priority: find any connected step (could be another sub-step)
-        // This is a fallback option
-        val anyConnectedStepId = subStep.nextStepIds.firstOrNull() ?: 
-                               rule.steps.firstOrNull { it.nextStepIds.contains(subStep.id) }?.id
-        
-        if (anyConnectedStepId != null) {
-            return rule.findStepById(anyConnectedStepId)
-        }
-        
-        // If no connections are found, return null
-        return null
-    }
-    
-    /**
-     * Verify that graph connections match rule data
-     */
-    private fun verifyGraphConnections(rule: Rule) {
-        LOG.info("Verifying graph connections against rule data...")
-        
-        // Check for missing connections
-        for (step in rule.steps) {
-            val sourceCell = stepToCellMap[step.id]
-            if (sourceCell == null) continue
-            
-            for (nextStepId in step.nextStepIds) {
-                val targetCell = stepToCellMap[nextStepId]
-                if (targetCell == null) continue
-                
-                val edges = graph.getEdgesBetween(sourceCell, targetCell)
-                if (edges == null || edges.isEmpty()) {
-                    LOG.error("Missing edge in graph: ${step.id} → $nextStepId")
-                }
-            }
-        }
-        
-        // Check for extra connections
-        val allEdges = graph.getChildEdges(graph.defaultParent)
-        if (allEdges != null) {
-            for (edge in allEdges) {
-                if (edge is mxCell && edge.isEdge) {
-                    val source = edge.source
-                    val target = edge.target
-                    
-                    if (source != null && target != null) {
-                        val sourceStep = cellToStepMap[source]
-                        val targetStep = cellToStepMap[target]
-                        
-                        if (sourceStep != null && targetStep != null) {
-                            if (!sourceStep.nextStepIds.contains(targetStep.id)) {
-                                LOG.error("Extra edge in graph: ${sourceStep.id} → ${targetStep.id}")
-                    }
-                }
-            }
-        }
-    }
-    }
-    }
-    private fun findMainNodeSubNodes(mainNodeId: String): List<String> {
-        val rule = currentRule ?: return emptyList()
-        
-        // Lấy main node
-        val mainNode = rule.steps.find { it.id == mainNodeId && !it.isSubStep } ?: return emptyList()
-        
-        // Tìm tất cả các sub node mà main node này trỏ đến
-        return mainNode.nextStepIds.mapNotNull { nextId ->
-            val step = rule.steps.find { it.id == nextId }
-            if (step?.isSubStep == true) nextId else null
-        }
-    }
-    
     /**
      * Public method to get the main steps of the current rule.
      */
@@ -982,20 +739,18 @@ class GraphPanel(
 
         val swapItem = JMenuItem("Swap Node")
         swapItem.addActionListener {
-            val swapId = JOptionPane.showInputDialog(this, "Enter ID of node to swap with:", "Swap Node", JOptionPane.QUESTION_MESSAGE)
+            val swapId = JOptionPane.showInputDialog(
+        null, // <-- truyền null để center on screen
+        "Enter ID of node to swap with:",
+        "Swap Node",
+        JOptionPane.QUESTION_MESSAGE
+        )
             if (swapId != null && swapId.isNotBlank()) {
                 onSwapNode(step, swapId.trim())
             }
         }
         popup.add(swapItem)
         
-        // Debug menu for connections
-        val showConnectionsItem = JMenuItem("Debug Connections")
-        showConnectionsItem.addActionListener {
-            val msg = "Step: ${step.id}\nNext Steps: ${step.nextStepIds.joinToString(", ")}"
-            JOptionPane.showMessageDialog(this, msg, "Step Connections", JOptionPane.INFORMATION_MESSAGE)
-        }
-        popup.add(showConnectionsItem)
         
         // Add layout menu item
         popup.addSeparator()
@@ -1043,38 +798,9 @@ class GraphPanel(
         }
         popup.add(layoutItem)
         
-        // Add debug information option
-        val debugItem = JMenuItem("Show Graph Info")
-        debugItem.addActionListener {
-            showGraphDebugInfo()
-        }
-        popup.add(debugItem)
-        
         popup.show(graphComponent.graphControl, x, y)
     }
     
-    /**
-     * Show debug information about the current graph
-     */
-    private fun showGraphDebugInfo() {
-        val rule = currentRule ?: return
-        
-        val sb = StringBuilder()
-        sb.append("Graph Information:\n")
-        sb.append("- Total Steps: ${rule.steps.size}\n")
-        sb.append("- Total Connections: ${countEdges()}\n\n")
-        
-        sb.append("Step Connections:\n")
-        for (step in rule.steps) {
-            sb.append("- ${step.id} → ${step.nextStepIds.joinToString(", ") { it }}\n")
-        }
-        
-        sb.append("\nMAIN FLOW PATH:\n")
-        val mainFlowPath = identifyMainFlowPath(rule)
-        sb.append(mainFlowPath.joinToString(" → "))
-        
-        JOptionPane.showMessageDialog(this, sb.toString(), "Graph Debug Info", JOptionPane.INFORMATION_MESSAGE)
-    }
     
     /**
      * Refresh the graph display based on the current rule.
@@ -1086,173 +812,6 @@ class GraphPanel(
         ensureNodesVisible()
     }
     
-    /**
-     * Check if any nodes have negative Y coordinates
-     */
-    private fun hasNegativeYCoordinates(): Boolean {
-        for (cell in stepToCellMap.values) {
-            val geo = graph.getCellGeometry(cell) ?: continue
-            if (geo.y < 0) return true
-        }
-        return false
-    }
-    
-    /**
-     * Get the selected step, if any.
-     */
-    fun getSelectedStep(): Step? {
-        val selectedCell = graph.selectionCell as? mxCell
-        return selectedCell?.let { cellToStepMap[it] }
-    }
-    
-    /**
-     * Display debug info in a separate window
-     */
-    private fun showDebugInfo() {
-        val rule = currentRule
-        if (rule == null) {
-            JOptionPane.showMessageDialog(this, "No rule loaded", "Debug Info", JOptionPane.INFORMATION_MESSAGE)
-            return
-        }
-        
-        // Create text area for debug info
-        val debugInfo = JTextArea().apply {
-            text = "===== RULE CONNECTION DEBUG INFO =====\n\n"
-            append("Total steps: ${rule.steps.size}\n\n")
-            append("STEP CONNECTIONS FROM DATA:\n")
-            for (step in rule.steps) {
-                append("${step.id} → ${step.nextStepIds.joinToString(", ") { it }}\n")
-            }
-            
-            append("\nACTUAL GRAPH CONNECTIONS:\n")
-            val allEdges = graph.getChildEdges(graph.defaultParent)
-            if (allEdges != null) {
-                for (edge in allEdges) {
-                    if (edge is mxCell && edge.isEdge) {
-                        val source = edge.source
-                        val target = edge.target
-                        
-                        if (source != null && target != null) {
-                            val sourceStep = cellToStepMap[source]
-                            val targetStep = cellToStepMap[target]
-                            
-                            if (sourceStep != null && targetStep != null) {
-                                append("${sourceStep.id} → ${targetStep.id}")
-                                if (!sourceStep.nextStepIds.contains(targetStep.id)) {
-                                    append(" [ERROR: Connection not in data!]")
-                                }
-                                
-                                // Kiểm tra và hiển thị thông tin về nodes trên đường đi
-                                val sourceGeo = graph.getCellGeometry(source)
-                                val targetGeo = graph.getCellGeometry(target)
-                                if (sourceGeo != null && targetGeo != null && sourceStep.isSubStep != targetStep.isSubStep) {
-                                    val nodesOnPath = findNodesOnPathBetween(sourceGeo, targetGeo, sourceStep.id, targetStep.id, sourceStep.isSubStep)
-                                    if (nodesOnPath.isNotEmpty()) {
-                                        append(" [Has ${nodesOnPath.size} nodes on path: ${nodesOnPath.joinToString(", ")}]")
-                                    }
-                                }
-                                append("\n")
-                            }
-                        }
-                    }
-                }
-            }
-            
-            append("\nMAIN FLOW PATH:\n")
-            val mainFlowPath = identifyMainFlowPath(rule)
-            append(mainFlowPath.joinToString(" → "))
-            
-            append("\n\nSPECIAL CONNECTIONS WITH NODES ON PATH:\n")
-            // Kiểm tra tất cả các kết nối để tìm các nút nằm trên đường đi
-            for (sourceStep in rule.steps) {
-                val sourceCell = stepToCellMap[sourceStep.id] ?: continue
-                val sourceGeo = graph.getCellGeometry(sourceCell) ?: continue
-                
-                for (targetId in sourceStep.nextStepIds) {
-                    val targetCell = stepToCellMap[targetId] ?: continue
-                    val targetStep = rule.steps.find { it.id == targetId } ?: continue
-                    val targetGeo = graph.getCellGeometry(targetCell) ?: continue
-                    
-                    // Hiển thị thông tin về bất kỳ kết nối nào, không chỉ giữa sub và main
-                    val nodesOnPath = findNodesOnPathBetween(sourceGeo, targetGeo, sourceStep.id, targetId, sourceStep.isSubStep)
-                    if (nodesOnPath.isNotEmpty()) {
-                        append("${sourceStep.id} → ${targetId}: Found ${nodesOnPath.size} nodes on path: ${nodesOnPath.joinToString(", ")}\n")
-                    }
-                    
-                    // Hiển thị cả thông tin về các kết nối dọc (sub to main với cùng X)
-                    if (sourceStep.isSubStep && !targetStep.isSubStep) {
-                        val xDiff = Math.abs(sourceGeo.x - targetGeo.x)
-                        if (xDiff < 20) {
-                            append("${sourceStep.id} → ${targetId}: Vertical connection (same X), skipping path check\n")
-                        }
-                    }
-                }
-            }
-            
-            // Thêm phần hiển thị về sub nodes của các main node
-            append("\n\nMAIN NODES WITH SUB NODES:\n")
-            val mainSteps = rule.steps.filter { !it.isSubStep }
-            for (mainStep in mainSteps) {
-                val subNodes = rule.steps.filter { it.isSubStep && mainStep.nextStepIds.contains(it.id) }
-                if (subNodes.isNotEmpty()) {
-                    append("${mainStep.id} has sub nodes: ${subNodes.map { it.id }.joinToString(", ")}\n")
-                    
-                    // Kiểm tra vị trí của sub nodes
-                    for (subNode in subNodes) {
-                        val subCell = stepToCellMap[subNode.id] ?: continue
-                        val subGeo = graph.getCellGeometry(subCell) ?: continue
-                        val isAbove = subGeo.y < 150
-                        append("  - ${subNode.id} is positioned ${if (isAbove) "ABOVE" else "BELOW"} main flow\n")
-                    }
-                }
-            }
-            
-            // Thêm thông tin debug từ hàm findNodesOnPathBetween
-            append("\n\nPATH FINDING DEBUG INFO:\n")
-            append("This section shows additional details about how nodes on paths are detected.\n")
-            append("- Node positions with y < 150 are considered ABOVE main flow\n")
-            append("- Node positions with y >= 150 are considered BELOW main flow\n")
-            append("- Nodes with similar X positions (diff < 20px) are considered aligned vertically\n")
-            append("- Sub-to-main connections check for other sub nodes of the target main node\n")
-            append("- Main-to-sub connections handle special routing to avoid node overlaps\n")
-            
-            isEditable = false
-            font = Font("Monospaced", Font.PLAIN, 12)
-        }
-        
-        // Create scrollable container
-        val scrollPane = JScrollPane(debugInfo)
-        
-        // Create and show dialog
-        val debugFrame = JDialog(SwingUtilities.getWindowAncestor(this) as? JFrame, "Debug Connection Info").apply {
-            layout = BorderLayout()
-            add(scrollPane, BorderLayout.CENTER)
-            
-            // Add button to close and copy to clipboard
-            val buttonPanel = JPanel(FlowLayout(FlowLayout.RIGHT))
-            val copyButton = JButton("Copy to Clipboard").apply {
-                addActionListener {
-                    val stringSelection = StringSelection(debugInfo.text)
-                    val clipboard = Toolkit.getDefaultToolkit().systemClipboard
-                    clipboard.setContents(stringSelection, null)
-                    JOptionPane.showMessageDialog(this@apply, "Debug info copied to clipboard!", "Copied", JOptionPane.INFORMATION_MESSAGE)
-                }
-            }
-            val closeButton = JButton("Close").apply {
-                addActionListener {
-                    dispose()
-                }
-            }
-            buttonPanel.add(copyButton)
-            buttonPanel.add(closeButton)
-            add(buttonPanel, BorderLayout.SOUTH)
-            
-            size = Dimension(800, 700)
-            isModal = false
-            setLocationRelativeTo(this@GraphPanel)
-            isVisible = true
-        }
-    }    
     
     /**
      * Identify the main flow path from start nodes to end nodes.
@@ -1334,8 +893,6 @@ class GraphPanel(
      * Ensure vertical edges are properly aligned by adjusting node positions
      */
     private fun ensureVerticalEdgesAligned() {
-        LOG.info("Final alignment pass for vertical connections")
-        
         // Process all connections
         currentRule?.let { rule ->
             for (step in rule.steps) {
@@ -1418,45 +975,6 @@ class GraphPanel(
         return endNodes
     }
     
-    /**
-     * Find shortest path from start to end using BFS.
-     */
-    private fun findShortestPath(rule: Rule, startNodeId: String, endNodeId: String): List<String> {
-        val queue = ArrayDeque<String>()
-        val visited = mutableSetOf<String>()
-        val parentMap = mutableMapOf<String, String>()
-        
-        queue.add(startNodeId)
-        visited.add(startNodeId)
-        
-        while (queue.isNotEmpty()) {
-            val currentNodeId = queue.removeFirst()
-            
-            if (currentNodeId == endNodeId) {
-                // Found the end node, reconstruct the path
-                return reconstructPath(parentMap, startNodeId, endNodeId)
-            }
-        
-        // Find the current step object
-            val currentStep = rule.steps.find { it.id == currentNodeId }
-        if (currentStep == null) {
-                LOG.error("Step $currentNodeId not found in rule")
-                continue
-            }
-            
-            // Explore all next steps
-            for (nextId in currentStep.nextStepIds) {
-                if (nextId !in visited) {
-                    queue.add(nextId)
-                    visited.add(nextId)
-                    parentMap[nextId] = currentNodeId
-                }
-            }
-        }
-        
-        // No path found
-        return emptyList()
-    }
     
     /**
      * Reconstruct the path from start to end using the parent map.
@@ -1477,14 +995,6 @@ class GraphPanel(
         return path
     }
 
-    /**
-     * Public method to get the main flow path of the current rule.
-     * This is now simply the list of main step IDs based on isSubStep property.
-     */
-    fun getMainFlowPath(): List<String> {
-        val rule = currentRule ?: return emptyList()
-        return rule.steps.filter { !it.isSubStep }.map { it.id }
-    }
 
     private fun findNodesOnPathBetween(
     sourceGeo: mxGeometry,
@@ -1492,7 +1002,7 @@ class GraphPanel(
     sourceId: String,
     targetId: String,
     isSourceSubStep: Boolean
-): List<String> {
+    ): List<String> {
     val rule = currentRule ?: return emptyList()
     val nodesOnPath = mutableListOf<String>()
 
@@ -1588,21 +1098,6 @@ class GraphPanel(
             if (sourceStep.isSubStep && !targetStep.isSubStep) {
                 // Đây là kết nối từ sub đến main
                 configureSubToMainEdge(edge, source, target)
-                continue
-            }
-            
-            // Xử lý kết nối từ start node đến main node
-            val isStartNode = isStartStep(sourceStep)
-            if (isStartNode && !targetStep.isSubStep) {
-                // Kết nối từ start node đến main node
-                configureStartToMainEdge(edge, source, target)
-                continue
-            }
-            
-            // Xử lý kết nối từ start node đến sub node
-            if (isStartNode && targetStep.isSubStep) {
-                // Kết nối từ start node đến sub node
-                configureStartToSubEdge(edge, source, target)
                 continue
             }
             
@@ -1800,122 +1295,6 @@ class GraphPanel(
         graph.model.setStyle(edge, "edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;")
     }
     
-    
-    /**
-     * Configure edge routing from start node to main node
-     */
-    private fun configureStartToMainEdge(edge: mxCell, source: mxCell, target: mxCell) {
-        // Kết nối từ start node đến main node - đơn giản là đường thẳng ngang
-        graph.model.setStyle(edge, "edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;")
-        LOG.info("Configured Start -> Main edge routing")
-    }
-    /**
-     * Configure edge routing from start node to sub node
-     */
-    private fun configureStartToSubEdge(edge: mxCell, source: mxCell, target: mxCell) {
-        val sourceGeo = graph.getCellGeometry(source)
-        val targetGeo = graph.getCellGeometry(target)
-        
-        if (sourceGeo == null || targetGeo == null) return
-        
-        // Tạo control points để tạo đường đi
-        val edgeGeo = edge.geometry.clone() as mxGeometry
-        edgeGeo.points = ArrayList<mxPoint>()
-        
-        // Lấy ID của sub-step để log
-        val subStepId = cellToStepMap[target]?.id ?: "unknown"
-        LOG.info("Configuring edge from start node to sub-step: $subStepId")
-        
-        // Điểm kết nối từ phía bên phải của source
-        val x1 = sourceGeo.x + sourceGeo.width
-        val y1 = sourceGeo.y + sourceGeo.height / 2
-        
-        // Điểm kết nối đến phía bên trái của target
-        val x3 = targetGeo.x
-        val y3 = targetGeo.y + targetGeo.height / 2
-        
-        // Check if target is above or below source
-        val isAbove = y3 < y1
-        val isDirectlyRight = Math.abs(x3 - (x1 + 80)) < 50
-        
-        if (isDirectlyRight) {
-            // Target is directly to the right of source, use simple routing
-            // Just add one control point for a smooth curve
-            val midX = (x1 + x3) / 2
-            edgeGeo.points.add(mxPoint(midX, y1))
-            edgeGeo.points.add(mxPoint(midX, y3))
-            LOG.info("Using direct routing for start->sub edge")
-} else {
-            // More complex routing for nodes that aren't positioned well
-            LOG.info("Using custom routing for start->sub edge")
-            
-            // Điểm trung gian cách bên phải start node
-            val x2 = x1 + 50
-            
-            // Add points for better routing
-            edgeGeo.points.add(mxPoint(x2, y1))
-            
-            // If sub node is significantly above/below, add extra points
-            if (Math.abs(y3 - y1) > 50) {
-                val midY = (y1 + y3) / 2
-                edgeGeo.points.add(mxPoint(x2, midY))
-                edgeGeo.points.add(mxPoint(x3 - 30, midY))
-                edgeGeo.points.add(mxPoint(x3 - 30, y3))
-            } else {
-                // Direct line to target
-                edgeGeo.points.add(mxPoint(x2, y3))
-            }
-        }
-        
-        // Áp dụng geometry mới
-        graph.model.setGeometry(edge, edgeGeo)
-        
-        // Áp dụng style with highlight color for visibility
-        graph.model.setStyle(edge, "edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;")
-        
-        LOG.info("Configured Start -> Sub edge routing with improved visibility")
-    }
-    
-    /**
-     * Configure edge routing from main node to main node
-     */
-
-
-    /**
-     * Kiểm tra xem đường kết nối giữa hai node có đi xuyên qua node chính nào không
-     */
-    private fun checkEdgeCrossingMainNode(sourceGeo: mxGeometry, targetGeo: mxGeometry): Boolean {
-        // Kiểm tra tất cả main nodes có nằm giữa đường kết nối không
-        val rule = currentRule ?: return false
-        
-        // Nếu kết nối là dọc hoặc gần dọc, không cần kiểm tra
-        val xDiff = Math.abs(sourceGeo.x - targetGeo.x)
-        if (xDiff < 30) return false
-        
-        // Nếu đường đi từ trên xuống dưới hoặc từ dưới lên trên (đi qua khu vực chính)
-        val sourceAbove = sourceGeo.y < 150
-        val targetAbove = targetGeo.y < 150
-        
-        if (sourceAbove != targetAbove) {
-            // Kiểm tra các node chính có nằm giữa 2 node không
-            for (step in rule.steps) {
-                if (step.isSubStep) continue
-                
-                val mainCell = stepToCellMap[step.id] ?: continue
-                val mainGeo = graph.getCellGeometry(mainCell) ?: continue
-                
-                // Kiểm tra xem node chính có nằm giữa nguồn và đích theo chiều ngang không
-                if (mainGeo.x > Math.min(sourceGeo.x, targetGeo.x) && 
-                    mainGeo.x < Math.max(sourceGeo.x, targetGeo.x)) {
-                    LOG.info("Edge would cross through main node: ${step.id}")
-                    return true
-                }
-            }
-        }
-        
-        return false
-    }
-
     /**
      * Find all bidirectional connection pairs (A→B and B→A).
      */
