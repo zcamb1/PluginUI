@@ -103,6 +103,7 @@ class RuleParser {
 
     /**
      * Serialize a rule to a JSON string.
+     * format lại json và hỗ trợ xuất ra file nếu cần
      */
     fun serializeRule(rule: Rule): String {
         val jsonObject = JSONObject()
