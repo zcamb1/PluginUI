@@ -2,6 +2,7 @@ package com.example.rulemaker.ui
 
 import com.example.rulemaker.model.Rule
 import com.example.rulemaker.model.Step
+import com.example.rulemaker.model.LayoutMatcher
 import com.example.rulemaker.service.RuleParser
 import com.intellij.icons.AllIcons
 import com.intellij.openapi.actionSystem.*
@@ -30,6 +31,8 @@ import javax.swing.border.TitledBorder
 import java.util.ArrayDeque
 import java.awt.GridBagLayout
 import java.awt.GridBagConstraints
+import javax.swing.table.AbstractTableModel
+import javax.swing.table.DefaultTableModel
 
 /**
  * Main window for the Rule Maker plugin.
@@ -80,6 +83,30 @@ class RuleMakerWindow(private val project: Project) : JPanel(BorderLayout()) {
     private val commonInfoArea = JTextArea("{\n\n}").apply {
         lineWrap = true
         wrapStyleWord = true
+    }
+    
+    // Table Model cho layoutMatchers
+    class LayoutMatchersTableModel : AbstractTableModel() {
+        val columns = arrayOf("matchTarget", "matchOperand", "matchCriteria", "highlightType")
+        val data = mutableListOf<Array<String?>>()
+
+        override fun getRowCount() = data.size
+        override fun getColumnCount() = columns.size
+        override fun getColumnName(col: Int) = columns[col]
+        override fun getValueAt(row: Int, col: Int) = data[row][col]
+        override fun isCellEditable(row: Int, col: Int) = true
+        override fun setValueAt(value: Any?, row: Int, col: Int) {
+            data[row][col] = value as? String
+            fireTableCellUpdated(row, col)
+        }
+        fun addEmptyRow() {
+            data.add(arrayOfNulls<String>(columns.size))
+            fireTableRowsInserted(data.size-1, data.size-1)
+        }
+        fun removeRow(row: Int) {
+            data.removeAt(row)
+            fireTableRowsDeleted(row, row)
+        }
     }
     
     init {
@@ -237,44 +264,82 @@ class RuleMakerWindow(private val project: Project) : JPanel(BorderLayout()) {
     }
 
     /**
+     * Hàm fixWidth cho JComponent
+     */
+    private fun fixWidth(c: JComponent) {
+        c.maximumSize = Dimension(Int.MAX_VALUE, c.preferredSize.height)
+    }
+
+    /**
      * Create the Step Info content panel
      */
     private fun createStepInfoContent(): JPanel {
         val panel = JPanel(BorderLayout())
         panel.background = Color(60, 63, 65)
 
-        // Custom step editor panel
-        val customStepPanel = JPanel(BorderLayout())
-        customStepPanel.background = Color(60, 63, 65)
+        // 1. FormBuilder cho phần nhập liệu
+        val idField = editorPanel.getIdField()
+        val screenIdField = editorPanel.getScreenIdField()
+        val guideContentArea = JBScrollPane(editorPanel.getGuideContentArea())
+        guideContentArea.preferredSize = Dimension(300, 60)
+        val nextStepsField = editorPanel.getNextStepsField()
+        nextStepsField.preferredSize = Dimension(nextStepsField.preferredSize.width, 32)
+        val isSubStepCheckbox = editorPanel.getIsSubStepCheckbox()
+        val formPanel = com.intellij.util.ui.FormBuilder.createFormBuilder()
+            .addLabeledComponent("Step ID:", idField)
+            .addLabeledComponent("Screen ID:", screenIdField)
+            .addLabeledComponent("Guide Content:", guideContentArea)
+            .addLabeledComponent("Next Step IDs:", nextStepsField)
+            .panel.apply {
+                border = JBUI.Borders.empty(10, 10, 0, 10)
+            }
+        // Panel riêng cho checkbox isSubStep, căn trái, spacing trên
+        val isSubStepPanel = JPanel(FlowLayout(FlowLayout.LEFT, 0, 0)).apply {
+            background = Color(60, 63, 65)
+            add(Box.createVerticalStrut(10))
+            add(isSubStepCheckbox)
+        }
 
-        // Tạo các trường layoutMatchers
-        val matchTargetLabel = JLabel("matchTarget:")
-        matchTargetLabel.foreground = Color.WHITE
-        val matchTargetCombo = JComboBox(arrayOf("text", "content_description", "class_name"))
-        matchTargetCombo.preferredSize = Dimension(140, 28)
+        // 2. Panel chứa bảng layout matchers và nút
+        val layoutMatchersModel = LayoutMatchersTableModel()
+        layoutMatchersTable = JTable(layoutMatchersModel)
+        layoutMatchersTable.background = Color(60, 63, 65)
+        layoutMatchersTable.foreground = Color.WHITE
+        layoutMatchersTable.selectionBackground = Color(90, 90, 120)
+        layoutMatchersTable.selectionForeground = Color.WHITE
+        layoutMatchersTable.columnModel.getColumn(0).cellEditor = DefaultCellEditor(JComboBox(arrayOf("text", "content_description", "class_name")))
+        layoutMatchersTable.columnModel.getColumn(2).cellEditor = DefaultCellEditor(JComboBox(arrayOf("equals", "contains")))
+        layoutMatchersTable.columnModel.getColumn(3).cellEditor = DefaultCellEditor(JComboBox(arrayOf("none", "click", "scroll_down", "scroll_right", "scroll_left_right", "invisible")))
+        layoutMatchersTable.columnModel.getColumn(0).preferredWidth = 110
+        layoutMatchersTable.columnModel.getColumn(1).preferredWidth = 120
+        layoutMatchersTable.columnModel.getColumn(2).preferredWidth = 110
+        layoutMatchersTable.columnModel.getColumn(3).preferredWidth = 120
+        layoutMatchersTable.autoResizeMode = JTable.AUTO_RESIZE_OFF
+        val matchersScrollPane = JScrollPane(layoutMatchersTable)
+        matchersScrollPane.horizontalScrollBarPolicy = JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED
+        matchersScrollPane.preferredSize = Dimension(750, 240)
 
-        val matchOperandLabel = JLabel("matchOperand:")
-        matchOperandLabel.foreground = Color.WHITE
-        val matchOperandField = JTextField()
-        matchOperandField.preferredSize = Dimension(140, 28)
+        // Panel chứa 2 nút icon nhỏ
+        val matcherBtnPanel = JPanel(FlowLayout(FlowLayout.LEFT))
+        matcherBtnPanel.background = Color(60, 63, 65)
+        val addMatcherBtn = JButton(AllIcons.General.Add)
+        addMatcherBtn.toolTipText = "Thêm dòng Matcher"
+        addMatcherBtn.preferredSize = Dimension(28, 28)
+        addMatcherBtn.maximumSize = Dimension(28, 28)
+        val removeMatcherBtn = JButton(AllIcons.General.Remove)
+        removeMatcherBtn.toolTipText = "Xóa dòng Matcher"
+        removeMatcherBtn.preferredSize = Dimension(28, 28)
+        removeMatcherBtn.maximumSize = Dimension(28, 28)
+        matcherBtnPanel.add(addMatcherBtn)
+        matcherBtnPanel.add(removeMatcherBtn)
+        addMatcherBtn.addActionListener { layoutMatchersModel.addEmptyRow() }
+        removeMatcherBtn.addActionListener {
+            val row = layoutMatchersTable.selectedRow
+            if (row >= 0) layoutMatchersModel.removeRow(row)
+        }
 
-        val matchCriteriaLabel = JLabel("matchCriteria:")
-        matchCriteriaLabel.foreground = Color.WHITE
-        val matchCriteriaCombo = JComboBox(arrayOf("equals", "contains"))
-        matchCriteriaCombo.preferredSize = Dimension(140, 28)
-
-        val highlightTypeLabel = JLabel("highlightType:")
-        highlightTypeLabel.foreground = Color.WHITE
-        val highlightTypeCombo = JComboBox(arrayOf("none", "click", "scroll_down", "scroll_right", "scroll_left_right", "invisible"))
-        highlightTypeCombo.preferredSize = Dimension(140, 28)
-
-        val transitionConditionLabel = JLabel("transitionCondition:")
-        transitionConditionLabel.foreground = Color.WHITE
-        val transitionConditionCombo = JComboBox(arrayOf("layout_match", "tts_end"))
-        transitionConditionCombo.preferredSize = Dimension(140, 28)
-
-        // Panel nhóm layoutMatchers
-        val layoutMatchersPanel = JPanel(GridBagLayout())
+        // Panel chứa bảng và nút, có border tiêu đề
+        val layoutMatchersPanel = JPanel(BorderLayout())
         layoutMatchersPanel.background = Color(60, 63, 65)
         layoutMatchersPanel.border = BorderFactory.createTitledBorder(
             BorderFactory.createLineBorder(Color.GRAY),
@@ -284,105 +349,30 @@ class RuleMakerWindow(private val project: Project) : JPanel(BorderLayout()) {
             null,
             Color.WHITE
         )
-        val gbc = GridBagConstraints()
-        gbc.insets = JBUI.insets(4, 4, 4, 4)
-        gbc.anchor = GridBagConstraints.LINE_START
-        gbc.fill = GridBagConstraints.HORIZONTAL
-        gbc.gridx = 0
-        gbc.gridy = 0
-        layoutMatchersPanel.add(matchTargetLabel, gbc)
-        gbc.gridx = 1
-        layoutMatchersPanel.add(matchTargetCombo, gbc)
-        gbc.gridx = 0; gbc.gridy++
-        layoutMatchersPanel.add(matchOperandLabel, gbc)
-        gbc.gridx = 1
-        layoutMatchersPanel.add(matchOperandField, gbc)
-        gbc.gridx = 0; gbc.gridy++
-        layoutMatchersPanel.add(matchCriteriaLabel, gbc)
-        gbc.gridx = 1
-        layoutMatchersPanel.add(matchCriteriaCombo, gbc)
-        gbc.gridx = 0; gbc.gridy++
-        layoutMatchersPanel.add(highlightTypeLabel, gbc)
-        gbc.gridx = 1
-        layoutMatchersPanel.add(highlightTypeCombo, gbc)
-        gbc.gridx = 0; gbc.gridy++
-        layoutMatchersPanel.add(transitionConditionLabel, gbc)
-        gbc.gridx = 1
-        layoutMatchersPanel.add(transitionConditionCombo, gbc)
-        layoutMatchersPanel.preferredSize = Dimension(340, 180)
+        layoutMatchersPanel.add(matcherBtnPanel, BorderLayout.NORTH)
+        layoutMatchersPanel.add(matchersScrollPane, BorderLayout.CENTER)
+        layoutMatchersPanel.preferredSize = Dimension(750, 300)
 
-        // Tạo form với GroupLayout
-        val formPanel = JPanel()
-        formPanel.background = Color(60, 63, 65)
-        val layout = GroupLayout(formPanel)
-        formPanel.layout = layout
-        layout.autoCreateGaps = true
-        layout.autoCreateContainerGaps = true
+        // 3. Gộp lại vào mainPanel
+        val mainPanel = JPanel()
+        mainPanel.layout = BoxLayout(mainPanel, BoxLayout.Y_AXIS)
+        mainPanel.background = Color(60, 63, 65)
+        mainPanel.maximumSize = Dimension(800, Int.MAX_VALUE)
+        mainPanel.preferredSize = Dimension(800, 500)
+        mainPanel.add(Box.createVerticalStrut(10))
+        mainPanel.add(formPanel)
+        mainPanel.add(Box.createVerticalStrut(10))
+        mainPanel.add(layoutMatchersPanel)
+        mainPanel.add(Box.createVerticalStrut(10))
+        mainPanel.add(isSubStepPanel)
+        mainPanel.add(Box.createVerticalStrut(10))
 
-        val stepIdLabel = JLabel("Step ID:")
-        stepIdLabel.foreground = Color.WHITE
-        val screenIdLabel = JLabel("Screen ID:")
-        screenIdLabel.foreground = Color.WHITE
-        val guideContentLabel = JLabel("Guide Content:")
-        guideContentLabel.foreground = Color.WHITE
-        val nextStepIdsLabel = JLabel("Next Step IDs:")
-        nextStepIdsLabel.foreground = Color.WHITE
-        val isSubStepCheckbox = editorPanel.getIsSubStepCheckbox()
+        // Add vào customStepPanel
+        val customStepPanel = JPanel(BorderLayout())
+        customStepPanel.background = Color(60, 63, 65)
+        customStepPanel.add(mainPanel, BorderLayout.CENTER)
 
-        val idField = editorPanel.getIdField()
-        val screenIdField = editorPanel.getScreenIdField()
-        val guideContentArea = JBScrollPane(editorPanel.getGuideContentArea())
-        val nextStepsField = editorPanel.getNextStepsField()
-
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                .addGroup(
-                    layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                            .addComponent(stepIdLabel)
-                            .addComponent(screenIdLabel)
-                            .addComponent(guideContentLabel)
-                            .addComponent(nextStepIdsLabel)
-                        )
-                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                            .addComponent(idField)
-                            .addComponent(screenIdField)
-                            .addComponent(guideContentArea)
-                            .addComponent(nextStepsField)
-                        )
-                )
-                .addComponent(layoutMatchersPanel)
-                .addComponent(isSubStepCheckbox)
-        )
-        layout.setVerticalGroup(
-            layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(stepIdLabel)
-                    .addComponent(idField)
-                )
-                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(screenIdLabel)
-                    .addComponent(screenIdField)
-                )
-                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addComponent(guideContentLabel)
-                    .addComponent(guideContentArea)
-                )
-                .addComponent(layoutMatchersPanel)
-                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(nextStepIdsLabel)
-                    .addComponent(nextStepsField)
-                )
-                .addComponent(isSubStepCheckbox)
-        )
-
-        // Bọc formPanel trong JScrollPane để có thể cuộn nếu không đủ chỗ
-        val scrollPane = JScrollPane(formPanel)
-        scrollPane.border = null
-        scrollPane.background = Color(60, 63, 65)
-        customStepPanel.add(scrollPane, BorderLayout.CENTER)
-
-        // Navigation buttons
+        // Navigation buttons giữ nguyên
         val navPanel = JPanel(FlowLayout(FlowLayout.CENTER))
         navPanel.background = Color(60, 63, 65)
         navPanel.border = JBUI.Borders.empty(10)
@@ -729,6 +719,81 @@ class RuleMakerWindow(private val project: Project) : JPanel(BorderLayout()) {
     }
     
     /**
+     * Update layoutMatchers table with data from the given step.
+     */
+    private fun updateLayoutMatchersTable(step: Step) {
+        val model = layoutMatchersTable.model as LayoutMatchersTableModel
+        model.data.clear()
+        
+        step.layoutMatchers.forEach { matcher ->
+            model.data.add(arrayOf(
+                matcher.matchTarget,
+                matcher.matchOperand,
+                matcher.matchCriteria,
+                matcher.highlightType,
+                null // empty transitionCondition cell
+            ))
+        }
+        
+        model.fireTableDataChanged()
+    }
+    
+    /**
+     * Update the current step with data from layoutMatchersTable and save to currentRule.
+     */
+    private fun updateStepWithLayoutMatchersData(currentStep: Step) {
+        val tableModel = layoutMatchersTable.model as LayoutMatchersTableModel
+        val matchers = mutableListOf<LayoutMatcher>()
+        
+        for (row in 0 until tableModel.rowCount) {
+            val matchTarget = tableModel.getValueAt(row, 0)?.toString() ?: ""
+            val matchOperand = tableModel.getValueAt(row, 1)?.toString() ?: ""
+            val matchCriteria = tableModel.getValueAt(row, 2)?.toString()
+            val highlightType = tableModel.getValueAt(row, 3)?.toString()
+            
+            matchers.add(LayoutMatcher(matchTarget, matchOperand, matchCriteria, highlightType))
+        }
+        
+        // Tạo step mới với layoutMatchers mới và các giá trị khác từ currentStep
+        val updatedStep = Step(
+            id = currentStep.id,
+            screenId = currentStep.screenId,
+            guideContent = currentStep.guideContent,
+            layoutMatchers = matchers,
+            nextStepIds = currentStep.nextStepIds,
+            screenMatcher = currentStep.screenMatcher,
+            transitionCondition = currentStep.transitionCondition,
+            isSubStep = currentStep.isSubStep
+        )
+        
+        // Cập nhật step mới vào currentRule
+        updateCurrentRuleWithStep(currentStep, updatedStep)
+    }
+    
+    /**
+     * Update a step in the current rule.
+     */
+    private fun updateCurrentRuleWithStep(oldStep: Step, newStep: Step) {
+        val rule = currentRule ?: return
+        val index = rule.steps.indexOfFirst { it.id == oldStep.id }
+        if (index >= 0) {
+            // Tạo danh sách steps mới có chứa newStep thay vì oldStep
+            val updatedSteps = rule.steps.toMutableList()
+            updatedSteps[index] = newStep
+            
+            // Cập nhật currentRule với danh sách steps mới
+            currentRule = rule.copy(steps = updatedSteps)
+            
+            // Cập nhật lại các tham chiếu
+            editorPanel.setRule(currentRule!!)
+            graphPanel.displayRule(currentRule!!)
+            
+            // Lưu lại step mới vào biến currentStep trong EditorPanel
+            editorPanel.setStep(newStep)
+        }
+    }
+
+    /**
      * Callback when a step is selected in the graph.
      */
     private fun onStepSelected(step: Step) {
@@ -737,6 +802,7 @@ class RuleMakerWindow(private val project: Project) : JPanel(BorderLayout()) {
             editorPanel.setRule(currentRule!!)
         }
         editorPanel.setStep(step)
+        updateLayoutMatchersTable(step) // Update the table when a step is selected
         logMessagePanel.text += "Selected step: ${step.id}\n"
     }
     
@@ -744,6 +810,7 @@ class RuleMakerWindow(private val project: Project) : JPanel(BorderLayout()) {
      * Callback when a step is updated in the editor.
      */
     private fun onStepUpdated(step: Step) {
+        updateStepWithLayoutMatchersData(step) // Get data from table before updating the graph
         graphPanel.refreshGraph()
         logMessagePanel.text += "Updated step: ${step.id}\n"
     }
@@ -839,4 +906,7 @@ class RuleMakerWindow(private val project: Project) : JPanel(BorderLayout()) {
      * Get the main component.
      */
     fun getComponent(): JComponent = this
+
+    // Declare the layoutMatchersTable as a class member for access
+    private lateinit var layoutMatchersTable: JTable
 } 
