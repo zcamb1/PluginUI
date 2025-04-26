@@ -1,0 +1,1076 @@
+tôi có file string/xml cho app android như sau: <resources> <string name="app_name">PhotoEditor</s
+tôi đang làm thêm chức năng cộng trừ thêm 1 dòng của table này nhưng thiếu ý tưởng đặt nút cộng trừ
+dịchcreateAllEdges(rule: Rule) - Lines 614-678 This is the primary function that creates all initial
+Muito obrigado.
+Tìm hiểu cho tôi xem có cách xếp layout dạng cây cho các node bằng jgraphx không , tôi đang viết plu
+dierhenric85981
+20 sec. ago
+tôi có file string/xml cho app android như sau: <resources> <string name="app_name">PhotoEditor</string> // Image picker <string name="camera">Camera</string> <string name="upload_images">Upload images</string> // Filter <string name="ratio">Ratio</string> <string name="crop">Crop</string> <string name="rotate">Rotate</string> <string name="filter">Filter</string> // Language <string name="icon_language_description">Icon Language</string> <string name="language_title">Language</string> <string name="save_language">Save Language</string> // Setting <string name="setting_language">Language</string> <string name="setting_rate_app">Rate app</string> <string name="setting_share_app">Share app</string> <string name="setting_privacy_policy">Privacy Policy</string> <string name="cancel_setting">Cancel setting</string> <string name="setting_title">Setting</string> // Home Activity <string name="photo_collage">Photo Collage</string> <string name="collage_grid">Collage Grid</string> <string name="remove_bg">Remove BG</string> <string name="template">Template</string> <string name="photo_edit">Photo Edit</string> <string name="remove_background">Remove Background</string> <string name="spring_mark_icon">Spring Mark 🔥</string> <string name="festival">Festival</string> <string name="season">Season</string> <string name="birthday">Birthday</string> <string name="trending">Trending</string> <string name="templates">Templates</string> // Collage Grid <string name="layout">Layout</string> <string name="border">Border</string> <string name="background">Background</string> <string name="pattern">Pattern</string> <string name="get">Get</string> <string name="use">Use</string> <string name="try_str">Try</string> <string name="start">Start</string> <string name="solid">Solid</string> <string name="gradient">Gradient</string> <string name="cancel">Cancel</string> <string name="discard_results_title">Discard results?</string> <string name="discard_results_description">If you leave now, your masterpiece will be lost forever!</string> // Onboarding <string name="onboarding1_description">Create stunning collages in seconds!</string> <string name="onboarding2_description">Turn photos into eye-catching designs!</string> <string name="onboarding3_description">Remove backgrounds instantly with AI!</string> <string name="button_next">Next</string> //Background removal <string name="bg_removal_failed">Background removal failed</string> <string name="select">Select</string> <string name="close">Close</string> <string name="tutorial_brush_eraser">Brush over the target area and use eraser to optimize it</string> <string name="tutorial_ai_remove_bg">Automatically scan and cutout in seconds</string> <string name="brush_n_eraser">Brush & Eraser</string> <string name="ai">AI</string> <string name="brush">Brush</string> <string name="eraser">Eraser</string> <string name="size">Size</string> <string name="offset">Offset</string> // Splash <string name="photo_collage_splash">PHOTO COLLAGE</string> &lt;!-- TODO: Remove or change this placeholder text --&gt; <string name="hello_blank_fragment">Hello blank fragment</string> // Saved <string name="saved">Saved</string> <string name="share_to">Share to</string> </resources> tạo giúp tôi file string các ngôn ngữ này để chuyển ngôn ngữ cho app : val languages = listOf( LanguageItem("en", "English", R.drawable.icon_english_language), LanguageItem("pt", "Portuguese", R.drawable.icon_portuguese_language), LanguageItem("id", "Indonesian", R.drawable.indonesian), LanguageItem("es", "Spanish", R.drawable.icon_spanish_language), LanguageItem("hi", "Hindi", R.drawable.icon_hindi_language), LanguageItem("fr", "French", R.drawable.icon_french_language), LanguageItem("vi", "Tiếng Việt", R.drawable.icon_vietnamese_language) )
+tôi có file string/xml cho app android như sau:
+
+<resources>
+<string name="app_name">PhotoEditor</string>
+// Image picker
+<string name="camera">Camera</string>
+<string name="upload_images">Upload images</string>
+// Filter
+<string name="ratio">Ratio</string>
+<string name="crop">Crop</string>
+<string name="rotate">Rotate</string>
+<string name="filter">Filter</string>
+// Language
+<string name="icon_language_description">Icon Language</string>
+<string name="language_title">Language</string>
+<string name="save_language">Save Language</string>
+// Setting
+<string name="setting_language">Language</string>
+<string name="setting_rate_app">Rate app</string>
+<string name="setting_share_app">Share app</string>
+<string name="setting_privacy_policy">Privacy Policy</string>
+<string name="cancel_setting">Cancel setting</string>
+<string name="setting_title">Setting</string>
+// Home Activity
+<string name="photo_collage">Photo Collage</string>
+<string name="collage_grid">Collage Grid</string>
+<string name="remove_bg">Remove BG</string>
+<string name="template">Template</string>
+<string name="photo_edit">Photo Edit</string>
+<string name="remove_background">Remove Background</string>
+<string name="spring_mark_icon">Spring Mark 🔥</string>
+<string name="festival">Festival</string>
+<string name="season">Season</string>
+<string name="birthday">Birthday</string>
+<string name="trending">Trending</string>
+<string name="templates">Templates</string>
+// Collage Grid
+<string name="layout">Layout</string>
+<string name="border">Border</string>
+<string name="background">Background</string>
+<string name="pattern">Pattern</string>
+<string name="get">Get</string>
+<string name="use">Use</string>
+<string name="try_str">Try</string>
+<string name="start">Start</string>
+<string name="solid">Solid</string>
+<string name="gradient">Gradient</string>
+<string name="cancel">Cancel</string>
+<string name="discard_results_title">Discard results?</string>
+<string name="discard_results_description">If you leave now, your masterpiece will be lost forever!</string>
+// Onboarding
+<string name="onboarding1_description">Create stunning collages in seconds!</string>
+<string name="onboarding2_description">Turn photos into eye-catching designs!</string>
+<string name="onboarding3_description">Remove backgrounds instantly with AI!</string>
+<string name="button_next">Next</string>
+//Background removal
+<string name="bg_removal_failed">Background removal failed</string>
+<string name="select">Select</string>
+<string name="close">Close</string>
+<string name="tutorial_brush_eraser">Brush over the target area and use eraser to optimize it</string>
+<string name="tutorial_ai_remove_bg">Automatically scan and cutout in seconds</string>
+<string name="brush_n_eraser">Brush & Eraser</string>
+<string name="ai">AI</string>
+<string name="brush">Brush</string>
+<string name="eraser">Eraser</string>
+<string name="size">Size</string>
+<string name="offset">Offset</string>
+// Splash
+<string name="photo_collage_splash">PHOTO COLLAGE</string>
+&lt;!-- TODO: Remove or change this placeholder text --&gt;
+<string name="hello_blank_fragment">Hello blank fragment</string>
+// Saved
+<string name="saved">Saved</string>
+<string name="share_to">Share to</string>
+</resources>
+
+
+tạo giúp tôi file string các ngôn ngữ này để chuyển ngôn ngữ cho app :
+val languages = listOf(
+LanguageItem("en", "English", R.drawable.icon_english_language),
+LanguageItem("pt", "Portuguese", R.drawable.icon_portuguese_language),
+LanguageItem("id", "Indonesian", R.drawable.indonesian),
+LanguageItem("es", "Spanish", R.drawable.icon_spanish_language),
+LanguageItem("hi", "Hindi", R.drawable.icon_hindi_language),
+LanguageItem("fr", "French", R.drawable.icon_french_language),
+LanguageItem("vi", "Tiếng Việt", R.drawable.icon_vietnamese_language)
+)
+Show less
+tôi có file string/xml cho app android như sau: <resources> <string name="app_name">PhotoEditor</string> // Image picker <string name="camera">Camera</string> <string name="upload_images">Upload images</string> // Filter <string name="ratio">Ratio</string> <string name="crop">Crop</string> <string name="rotate">Rotate</string> <string name="filter">Filter</string> // Language <string name="icon_language_description">Icon Language</string> <string name="language_title">Language</string> <string name="save_language">Save Language</string> // Setting <string name="setting_language">Language</string> <string name="setting_rate_app">Rate app</string> <string name="setting_share_app">Share app</string> <string name="setting_privacy_policy">Privacy Policy</string> <string name="cancel_setting">Cancel setting</string> <string name="setting_title">Setting</string> // Home Activity <string name="photo_collage">Photo Collage</string> <string name="collage_grid">Collage Grid</string> <string name="remove_bg">Remove BG</string> <string name="template">Template</string> <string name="photo_edit">Photo Edit</string> <string name="remove_background">Remove Background</string> <string name="spring_mark_icon">Spring Mark 🔥</string> <string name="festival">Festival</string> <string name="season">Season</string> <string name="birthday">Birthday</string> <string name="trending">Trending</string> <string name="templates">Templates</string> // Collage Grid <string name="layout">Layout</string> <string name="border">Border</string> <string name="background">Background</string> <string name="pattern">Pattern</string> <string name="get">Get</string> <string name="use">Use</string> <string name="try_str">Try</string> <string name="start">Start</string> <string name="solid">Solid</string> <string name="gradient">Gradient</string> <string name="cancel">Cancel</string> <string name="discard_results_title">Discard results?</string> <string name="discard_results_description">If you leave now, your masterpiece will be lost forever!</string> // Onboarding <string name="onboarding1_description">Create stunning collages in seconds!</string> <string name="onboarding2_description">Turn photos into eye-catching designs!</string> <string name="onboarding3_description">Remove backgrounds instantly with AI!</string> <string name="button_next">Next</string> //Background removal <string name="bg_removal_failed">Background removal failed</string> <string name="select">Select</string> <string name="close">Close</string> <string name="tutorial_brush_eraser">Brush over the target area and use eraser to optimize it</string> <string name="tutorial_ai_remove_bg">Automatically scan and cutout in seconds</string> <string name="brush_n_eraser">Brush & Eraser</string> <string name="ai">AI</string> <string name="brush">Brush</string> <string name="eraser">Eraser</string> <string name="size">Size</string> <string name="offset">Offset</string> // Splash <string name="photo_collage_splash">PHOTO COLLAGE</string> &lt;!-- TODO: Remove or change this placeholder text --&gt; <string name="hello_blank_fragment">Hello blank fragment</string> // Saved <string name="saved">Saved</string> <string name="share_to">Share to</string> </resources> tạo giúp tôi file string các ngôn ngữ này để chuyển ngôn ngữ cho app : val languages = listOf( LanguageItem("en", "English", R.drawable.icon_english_language), LanguageItem("pt", "Portuguese", R.drawable.icon_portuguese_language), LanguageItem("id", "Indonesian", R.drawable.indonesian), LanguageItem("es", "Spanish", R.drawable.icon_spanish_language), LanguageItem("hi", "Hindi", R.drawable.icon_hindi_language), LanguageItem("fr", "French", R.drawable.icon_french_language), LanguageItem("vi", "Tiếng Việt", R.drawable.icon_vietnamese_language) )
+
+Answer
+Tuyệt vời! Dưới đây là hướng dẫn và các file strings.xml cho từng ngôn ngữ bạn yêu cầu, giúp app của bạn chuyển đổi đa ngôn ngữ dễ dàng.
+
+1. Cấu trúc thư mục strings Android
+Bạn nên tạo các thư mục như sau trong res:
+
+English (mặc định): res/values/strings.xml
+
+Portuguese: res/values-pt/strings.xml
+
+Indonesian: res/values-in/strings.xml
+
+Spanish: res/values-es/strings.xml
+
+Hindi: res/values-hi/strings.xml
+
+French: res/values-fr/strings.xml
+
+Vietnamese: res/values-vi/strings.xml
+
+2. File strings.xml cho từng ngôn ngữ
+English (values/strings.xml)
+Đã có sẵn như bạn gửi.
+
+Portuguese (values-pt/strings.xml)
+xml
+<resources>
+    <string name="app_name">PhotoEditor</string>
+    <string name="camera">Câmera</string>
+    <string name="upload_images">Carregar imagens</string>
+    <string name="ratio">Proporção</string>
+    <string name="crop">Cortar</string>
+    <string name="rotate">Girar</string>
+    <string name="filter">Filtro</string>
+    <string name="icon_language_description">Ícone de idioma</string>
+    <string name="language_title">Idioma</string>
+    <string name="save_language">Salvar idioma</string>
+    <string name="setting_language">Idioma</string>
+    <string name="setting_rate_app">Avaliar app</string>
+    <string name="setting_share_app">Compartilhar app</string>
+    <string name="setting_privacy_policy">Política de Privacidade</string>
+    <string name="cancel_setting">Cancelar configuração</string>
+    <string name="setting_title">Configuração</string>
+    <string name="photo_collage">Colagem de fotos</string>
+    <string name="collage_grid">Grade de colagem</string>
+    <string name="remove_bg">Remover fundo</string>
+    <string name="template">Modelo</string>
+    <string name="photo_edit">Editar foto</string>
+    <string name="remove_background">Remover fundo</string>
+    <string name="spring_mark_icon">Marca Primavera 🔥</string>
+    <string name="festival">Festival</string>
+    <string name="season">Estação</string>
+    <string name="birthday">Aniversário</string>
+    <string name="trending">Em alta</string>
+    <string name="templates">Modelos</string>
+    <string name="layout">Layout</string>
+    <string name="border">Borda</string>
+    <string name="background">Fundo</string>
+    <string name="pattern">Padrão</string>
+    <string name="get">Obter</string>
+    <string name="use">Usar</string>
+    <string name="try_str">Experimentar</string>
+    <string name="start">Começar</string>
+    <string name="solid">Sólido</string>
+    <string name="gradient">Gradiente</string>
+    <string name="cancel">Cancelar</string>
+    <string name="discard_results_title">Descartar resultados?</string>
+    <string name="discard_results_description">Se você sair agora, sua obra-prima será perdida para sempre!</string>
+    <string name="onboarding1_description">Crie colagens impressionantes em segundos!</string>
+    <string name="onboarding2_description">Transforme fotos em designs chamativos!</string>
+    <string name="onboarding3_description">Remova fundos instantaneamente com IA!</string>
+    <string name="button_next">Próximo</string>
+    <string name="bg_removal_failed">Falha na remoção do fundo</string>
+    <string name="select">Selecionar</string>
+    <string name="close">Fechar</string>
+    <string name="tutorial_brush_eraser">Pinte sobre a área alvo e use a borracha para otimizar</string>
+    <string name="tutorial_ai_remove_bg">Digitalize e recorte automaticamente em segundos</string>
+    <string name="brush_n_eraser">Pincel & Borracha</string>
+    <string name="ai">IA</string>
+    <string name="brush">Pincel</string>
+    <string name="eraser">Borracha</string>
+    <string name="size">Tamanho</string>
+    <string name="offset">Deslocamento</string>
+    <string name="photo_collage_splash">COLAGEM DE FOTOS</string>
+    <string name="hello_blank_fragment">Olá fragmento em branco</string>
+    <string name="saved">Salvo</string>
+    <string name="share_to">Compartilhar para</string>
+</resources>
+Indonesian (values-in/strings.xml)
+xml
+<resources>
+    <string name="app_name">PhotoEditor</string>
+    <string name="camera">Kamera</string>
+    <string name="upload_images">Unggah gambar</string>
+    <string name="ratio">Rasio</string>
+    <string name="crop">Potong</string>
+    <string name="rotate">Putar</string>
+    <string name="filter">Filter</string>
+    <string name="icon_language_description">Ikon Bahasa</string>
+    <string name="language_title">Bahasa</string>
+    <string name="save_language
+tôi có file string/xml cho app android như sau:
+
+<resources>
+<string name="app_name">PhotoEditor</string>
+// Image picker
+<string name="camera">Camera</string>
+<string name="upload_images">Upload images</string>
+// Filter
+<string name="ratio">Ratio</string>
+<string name="crop">Crop</string>
+<string name="rotate">Rotate</string>
+<string name="filter">Filter</string>
+// Language
+<string name="icon_language_description">Icon Language</string>
+<string name="language_title">Language</string>
+<string name="save_language">Save Language</string>
+// Setting
+<string name="setting_language">Language</string>
+<string name="setting_rate_app">Rate app</string>
+<string name="setting_share_app">Share app</string>
+<string name="setting_privacy_policy">Privacy Policy</string>
+<string name="cancel_setting">Cancel setting</string>
+<string name="setting_title">Setting</string>
+// Home Activity
+<string name="photo_collage">Photo Collage</string>
+<string name="collage_grid">Collage Grid</string>
+<string name="remove_bg">Remove BG</string>
+<string name="template">Template</string>
+<string name="photo_edit">Photo Edit</string>
+<string name="remove_background">Remove Background</string>
+<string name="spring_mark_icon">Spring Mark 🔥</string>
+<string name="festival">Festival</string>
+<string name="season">Season</string>
+<string name="birthday">Birthday</string>
+<string name="trending">Trending</string>
+<string name="templates">Templates</string>
+// Collage Grid
+<string name="layout">Layout</string>
+<string name="border">Border</string>
+<string name="background">Background</string>
+<string name="pattern">Pattern</string>
+<string name="get">Get</string>
+<string name="use">Use</string>
+<string name="try_str">Try</string>
+<string name="start">Start</string>
+<string name="solid">Solid</string>
+<string name="gradient">Gradient</string>
+<string name="cancel">Cancel</string>
+<string name="discard_results_title">Discard results?</string>
+<string name="discard_results_description">If you leave now, your masterpiece will be lost forever!</string>
+// Onboarding
+<string name="onboarding1_description">Create stunning collages in seconds!</string>
+<string name="onboarding2_description">Turn photos into eye-catching designs!</string>
+<string name="onboarding3_description">Remove backgrounds instantly with AI!</string>
+<string name="button_next">Next</string>
+//Background removal
+<string name="bg_removal_failed">Background removal failed</string>
+<string name="select">Select</string>
+<string name="close">Close</string>
+<string name="tutorial_brush_eraser">Brush over the target area and use eraser to optimize it</string>
+<string name="tutorial_ai_remove_bg">Automatically scan and cutout in seconds</string>
+<string name="brush_n_eraser">Brush & Eraser</string>
+<string name="ai">AI</string>
+<string name="brush">Brush</string>
+<string name="eraser">Eraser</string>
+<string name="size">Size</string>
+<string name="offset">Offset</string>
+// Splash
+<string name="photo_collage_splash">PHOTO COLLAGE</string>
+&lt;!-- TODO: Remove or change this placeholder text --&gt;
+<string name="hello_blank_fragment">Hello blank fragment</string>
+// Saved
+<string name="saved">Saved</string>
+<string name="share_to">Share to</string>
+</resources>
+
+
+tạo giúp tôi file string các ngôn ngữ này để chuyển ngôn ngữ cho app :
+val languages = listOf(
+LanguageItem("en", "English", R.drawable.icon_english_language),
+LanguageItem("pt", "Portuguese", R.drawable.icon_portuguese_language),
+LanguageItem("id", "Indonesian", R.drawable.indonesian),
+LanguageItem("es", "Spanish", R.drawable.icon_spanish_language),
+LanguageItem("hi", "Hindi", R.drawable.icon_hindi_language),
+LanguageItem("fr", "French", R.drawable.icon_french_language),
+LanguageItem("vi", "Tiếng Việt", R.drawable.icon_vietnamese_language)
+)
+Show more
+tôi có file string/xml cho app android như sau: <resources> <string name="app_name">PhotoEditor</string> // Image picker <string name="camera">Camera</string> <string name="upload_images">Upload images</string> // Filter <string name="ratio">Ratio</string> <string name="crop">Crop</string> <string name="rotate">Rotate</string> <string name="filter">Filter</string> // Language <string name="icon_language_description">Icon Language</string> <string name="language_title">Language</string> <string name="save_language">Save Language</string> // Setting <string name="setting_language">Language</string> <string name="setting_rate_app">Rate app</string> <string name="setting_share_app">Share app</string> <string name="setting_privacy_policy">Privacy Policy</string> <string name="cancel_setting">Cancel setting</string> <string name="setting_title">Setting</string> // Home Activity <string name="photo_collage">Photo Collage</string> <string name="collage_grid">Collage Grid</string> <string name="remove_bg">Remove BG</string> <string name="template">Template</string> <string name="photo_edit">Photo Edit</string> <string name="remove_background">Remove Background</string> <string name="spring_mark_icon">Spring Mark 🔥</string> <string name="festival">Festival</string> <string name="season">Season</string> <string name="birthday">Birthday</string> <string name="trending">Trending</string> <string name="templates">Templates</string> // Collage Grid <string name="layout">Layout</string> <string name="border">Border</string> <string name="background">Background</string> <string name="pattern">Pattern</string> <string name="get">Get</string> <string name="use">Use</string> <string name="try_str">Try</string> <string name="start">Start</string> <string name="solid">Solid</string> <string name="gradient">Gradient</string> <string name="cancel">Cancel</string> <string name="discard_results_title">Discard results?</string> <string name="discard_results_description">If you leave now, your masterpiece will be lost forever!</string> // Onboarding <string name="onboarding1_description">Create stunning collages in seconds!</string> <string name="onboarding2_description">Turn photos into eye-catching designs!</string> <string name="onboarding3_description">Remove backgrounds instantly with AI!</string> <string name="button_next">Next</string> //Background removal <string name="bg_removal_failed">Background removal failed</string> <string name="select">Select</string> <string name="close">Close</string> <string name="tutorial_brush_eraser">Brush over the target area and use eraser to optimize it</string> <string name="tutorial_ai_remove_bg">Automatically scan and cutout in seconds</string> <string name="brush_n_eraser">Brush & Eraser</string> <string name="ai">AI</string> <string name="brush">Brush</string> <string name="eraser">Eraser</string> <string name="size">Size</string> <string name="offset">Offset</string> // Splash <string name="photo_collage_splash">PHOTO COLLAGE</string> &lt;!-- TODO: Remove or change this placeholder text --&gt; <string name="hello_blank_fragment">Hello blank fragment</string> // Saved <string name="saved">Saved</string> <string name="share_to">Share to</string> </resources> tạo giúp tôi file string các ngôn ngữ này để chuyển ngôn ngữ cho app : val languages = listOf( LanguageItem("en", "English", R.drawable.icon_english_language), LanguageItem("pt", "Portuguese", R.drawable.icon_portuguese_language), LanguageItem("id", "Indonesian", R.drawable.indonesian), LanguageItem("es", "Spanish", R.drawable.icon_spanish_language), LanguageItem("hi", "Hindi", R.drawable.icon_hindi_language), LanguageItem("fr", "French", R.drawable.icon_french_language), LanguageItem("vi", "Tiếng Việt", R.drawable.icon_vietnamese_language) )
+
+Answer
+Tuyệt vời! Dưới đây là các file strings.xml đã được dịch sang các ngôn ngữ: Portuguese, Indonesian, Spanish, Hindi, French, Vietnamese (bạn đã có tiếng Anh).
+Bạn chỉ cần copy vào đúng thư mục values-<mã_ngôn_ngữ> trong res/ của dự án Android.
+
+1. Portuguese (pt) – values-pt/strings.xml
+xml
+<resources>
+    <string name="app_name">PhotoEditor</string>
+    <string name="camera">Câmera</string>
+    <string name="upload_images">Enviar imagens</string>
+    <string name="ratio">Proporção</string>
+    <string name="crop">Cortar</string>
+    <string name="rotate">Girar</string>
+    <string name="filter">Filtro</string>
+    <string name="icon_language_description">Ícone de idioma</string>
+    <string name="language_title">Idioma</string>
+    <string name="save_language">Salvar idioma</string>
+    <string name="setting_language">Idioma</string>
+    <string name="setting_rate_app">Avaliar app</string>
+    <string name="setting_share_app">Compartilhar app</string>
+    <string name="setting_privacy_policy">Política de Privacidade</string>
+    <string name="cancel_setting">Cancelar configuração</string>
+    <string name="setting_title">Configurações</string>
+    <string name="photo_collage">Colagem de fotos</string>
+    <string name="collage_grid">Grade de colagem</string>
+    <string name="remove_bg">Remover fundo</string>
+    <string name="template">Modelo</string>
+    <string name="photo_edit">Editar foto</string>
+    <string name="remove_background">Remover fundo</string>
+    <string name="spring_mark_icon">Marca Primavera 🔥</string>
+    <string name="festival">Festival</string>
+    <string name="season">Estação</string>
+    <string name="birthday">Aniversário</string>
+    <string name="trending">Em alta</string>
+    <string name="templates">Modelos</string>
+    <string name="layout">Layout</string>
+    <string name="border">Borda</string>
+    <string name="background">Fundo</string>
+    <string name="pattern">Padrão</string>
+    <string name="get">Obter</string>
+    <string name="use">Usar</string>
+    <string name="try_str">Experimentar</string>
+    <string name="start">Começar</string>
+    <string name="solid">Sólido</string>
+    <string name="gradient">Gradiente</string>
+    <string name="cancel">Cancelar</string>
+    <string name="discard_results_title">Descartar resultados?</string>
+    <string name="discard_results_description">Se você sair agora, sua obra-prima será perdida para sempre!</string>
+    <string name="onboarding1_description">Crie colagens incríveis em segundos!</string>
+    <string name="onboarding2_description">Transforme fotos em designs impressionantes!</string>
+    <string name="onboarding3_description">Remova fundos instantaneamente com IA!</string>
+    <string name="button_next">Próximo</string>
+    <string name="bg_removal_failed">Falha na remoção do fundo</string>
+    <string name="select">Selecionar</string>
+    <string name="close">Fechar</string>
+    <string name="tutorial_brush_eraser">Passe o pincel na área desejada e use a borracha para otimizar</string>
+    <string name="tutorial_ai_remove_bg">Digitalize e recorte automaticamente em segundos</string>
+    <string name="brush_n_eraser">Pincel & Borracha</string>
+    <string name="ai">IA</string>
+    <string name="brush">Pincel</string>
+    <string name="eraser">Borracha</string>
+    <string name="size">Tamanho</string>
+    <string name="offset">Deslocamento</string>
+    <string name="photo_collage_splash">COLAGEM DE FOTOS</string>
+    <string name="hello_blank_fragment">Olá fragmento em branco</string>
+    <string name="saved">Salvo</string>
+    <string name="share_to">Compartilhar para</string>
+</resources>
+2. Indonesian (id) – values-in/strings.xml
+xml
+<resources>
+    <string name="app_name">PhotoEditor</string>
+    <string name="camera">Kamera</string>
+    <string name="upload_images">Unggah gambar</string>
+    <string name="ratio">Rasio</string>
+    <string name="crop">Potong</string>
+    <string name="rotate">Putar</string>
+    <string name="filter">Filter</string>
+    <string name="icon_language_description">Ikon Bahasa</string>
+    <string name="language_title">Bahasa</string>
+    <string name="save_language">Simpan Bahasa</string>
+    <string name="setting_language">Bahasa</string>
+    <string name="setting_rate_app">Nilai aplikasi</string>
+    <string name="setting_share_app">Bagikan aplikasi</string>
+    <string name="setting_privacy_policy">Kebijakan Privasi</string>
+    <string name="cancel_setting">Batalkan pengaturan</string>
+    <string name="setting_title">Pengaturan</string>
+    <string name="photo_collage">Kolase Foto</string>
+    <string name="collage_grid">Grid Kolase</string>
+    <string name="remove_bg">Hapus BG</string>
+    <string name="template">Template</string>
+    <string name="photo_edit">Edit Foto</string>
+    <string name="remove_background">Hapus Latar Belakang</string>
+    <string name="spring_mark_icon">Spring Mark 🔥</string>
+    <string name="festival">Festival</string>
+    <string name="season">Musim</string>
+    <string name="birthday">Ulang Tahun</string>
+    <string name="trending">Tren</string>
+    <string name="templates">Template</string>
+    <string name="layout">Tata Letak</string>
+    <string name="border">Bingkai</string>
+    <string name="background">Latar Belakang</string>
+    <string name="pattern">Pola</string>
+    <string name="get">Dapatkan</string>
+    <string name="use">Gunakan</string>
+    <string name="try_str">Coba</string>
+    <string name="start">Mulai</string>
+    <string name="solid">Solid</string>
+    <string name="gradient">Gradien</string>
+    <string name="cancel">Batal</string>
+    <string name="discard_results_title">Buang hasil?</string>
+    <string name="discard_results_description">Jika Anda keluar sekarang, karya Anda akan hilang selamanya!</string>
+    <string name="onboarding1_description">Buat kolase menakjubkan dalam hitungan detik!</string>
+    <string name="onboarding2_description">Ubah foto menjadi desain menarik!</string>
+    <string name="onboarding3_description">Hapus latar belakang seketika dengan AI!</string>
+    <string name="button_next">Berikutnya</string>
+    <string name="bg_removal_failed">Penghapusan latar belakang gagal</string>
+    <string name="select">Pilih</string>
+    <string name="close">Tutup</string>
+    <string name="tutorial_brush_eraser">Sikat area target dan gunakan penghapus untuk mengoptimalkan</string>
+    <string name="tutorial_ai_remove_bg">Pindai dan potong otomatis dalam hitungan detik</string>
+    <string name="brush_n_eraser">Kuas & Penghapus</string>
+    <string name="ai">AI</string>
+    <string name="brush">Kuas</string>
+    <string name="eraser">Penghapus</string>
+    <string name="size">Ukuran</string>
+    <string name="offset">Offset</string>
+    <string name="photo_collage_splash">KOLASE FOTO</string>
+    <string name="hello_blank_fragment">Halo fragmen kosong</string>
+    <string name="saved">Tersimpan</string>
+    <string name="share_to">Bagikan ke</string>
+</resources>
+3. Spanish (es) – values-es/strings.xml
+xml
+<resources>
+    <string name="app_name">PhotoEditor</string>
+    <string name="camera">Cámara</string>
+    <string name="upload_images">Subir imágenes</string>
+    <string name="ratio">Relación</string>
+    <string name="crop">Recortar</string>
+    <string name="rotate">Girar</string>
+    <string name="filter">Filtro</string>
+    <string name="icon_language_description">Icono de idioma</string>
+    <string name="language_title">Idioma</string>
+    <string name="save_language">Guardar idioma</string>
+    <string name="setting_language">Idioma</string>
+    <string name="setting_rate_app">Calificar app</string>
+    <string name="setting_share_app">Compartir app</string>
+    <string name="setting_privacy_policy">Política de Privacidad</string>
+    <string name="cancel_setting">Cancelar configuración</string>
+    <string name="setting_title">Configuración</string>
+    <string name="photo_collage">Collage de fotos</string>
+    <string name="collage_grid">Cuadrícula de collage</string>
+    <string name="remove_bg">Eliminar fondo</string>
+    <string name="template">Plantilla</string>
+    <string name="photo_edit">Editar foto</string>
+    <string name="remove_background">Eliminar fondo</string>
+    <string name="spring_mark_icon">Marca de Primavera 🔥</string>
+    <string name="festival">Festival</string>
+    <string name="season">Temporada</string>
+    <string name="birthday">Cumpleaños</string>
+    <string name="trending">Tendencias</string>
+    <string name="templates">Plantillas</string>
+    <string name="layout">Diseño</string>
+    <string name="border">Borde</string>
+    <string name="background">Fondo</string>
+    <string name="pattern">Patrón</string>
+    <string name="get">Obtener</string>
+    <string name="use">Usar</string>
+    <string name="try_str">Probar</string>
+    <string name="start">Comenzar</string>
+    <string name="solid">Sólido</string>
+    <string name="gradient">Gradiente</string>
+    <string name="cancel">Cancelar</string>
+    <string name="discard_results_title">¿Descartar resultados?</string>
+    <string name="discard_results_description">¡Si sales ahora, tu obra maestra se perderá para siempre!</string>
+    <string name="onboarding1_description">¡Crea collages impresionantes en segundos!</string>
+    <string name="onboarding2_description">¡Convierte fotos en diseños llamativos!</string>
+    <string name="onboarding3_description">¡Elimina fondos al instante con IA!</string>
+    <string name="button_next">Siguiente</string>
+    <string name="bg_removal_failed">Eliminación de fondo fallida</string>
+    <string name="select">Seleccionar</string>
+    <string name="close">Cerrar</string>
+    <string name="tutorial_brush_eraser">Pinta sobre el área objetivo y usa el borrador para optimizar</string>
+    <string name="tutorial_ai_remove_bg">Escanea y recorta automáticamente en segundos</string>
+    <string name="brush_n_eraser">Pincel y Borrador</string>
+    <string name="ai">IA</string>
+    <string name="brush">Pincel</string>
+    <string name="eraser">Borrador</string>
+    <string name="size">Tamaño</string>
+    <string name="offset">Desplazamiento</string>
+    <string name="photo_collage_splash">COLLAGE DE FOTOS</string>
+    <string name="hello_blank_fragment">Hola fragmento en blanco</string>
+    <string name="saved">Guardado</string>
+    <string name="share_to">Compartir a</string>
+</resources>
+4. Hindi (hi) – values-hi/strings.xml
+xml
+<resources>
+    <string name="app_name">PhotoEditor</string>
+    <string name="camera">कैमरा</string>
+    <string name="upload_images">छवियाँ अपलोड करें</string>
+    <string name="ratio">अनुपात</string>
+    <string name="crop">क्रॉप</string>
+    <string name="rotate">घुमाएँ</string>
+    <string name="filter">फ़िल्टर</string>
+    <string name="icon_language_description">भाषा आइकन</string>
+    <string name="language_title">भाषा</string>
+    <string name="save_language">भाषा सहेजें</string>
+    <string name="setting_language">भाषा</string>
+    <string name="setting_rate_app">ऐप रेट करें</string>
+    <string name="setting_share_app">ऐप साझा करें</string>
+    <string name="setting_privacy_policy">गोपनीयता नीति</string>
+    <string name="cancel_setting">सेटिंग रद्द करें</string>
+    <string name="setting_title">सेटिंग</string>
+    <string name="photo_collage">फोटो कोलाज</string>
+    <string name="collage_grid">कोलाज ग्रिड</string>
+    <string name="remove_bg">पृष्ठभूमि हटाएँ</string>
+    <string name="template">टेम्पलेट</string>
+    <string name="photo_edit">फोटो संपादित करें</string>
+    <string name="remove_background">पृष्ठभूमि हटाएँ</string>
+    <string name="spring_mark_icon">स्प्रिंग मार्क 🔥</string>
+    <string name="festival">त्योहार</string>
+    <string name="season">मौसम</string>
+    <string name="birthday">जन्मदिन</string>
+    <string name="trending">ट्रेंडिंग</string>
+    <string name="templates">टेम्पलेट्स</string>
+    <string name="layout">लेआउट</string>
+    <string name="border">सीमा</string>
+    <string name="background">पृष्ठभूमि</string>
+    <string name="pattern">पैटर्न</string>
+    <string name="get">प्राप्त करें</string
+tôi có file string/xml cho app android như sau:
+
+<resources>
+<string name="app_name">PhotoEditor</string>
+// Image picker
+<string name="camera">Camera</string>
+<string name="upload_images">Upload images</string>
+// Filter
+<string name="ratio">Ratio</string>
+<string name="crop">Crop</string>
+<string name="rotate">Rotate</string>
+<string name="filter">Filter</string>
+// Language
+<string name="icon_language_description">Icon Language</string>
+<string name="language_title">Language</string>
+<string name="save_language">Save Language</string>
+// Setting
+<string name="setting_language">Language</string>
+<string name="setting_rate_app">Rate app</string>
+<string name="setting_share_app">Share app</string>
+<string name="setting_privacy_policy">Privacy Policy</string>
+<string name="cancel_setting">Cancel setting</string>
+<string name="setting_title">Setting</string>
+// Home Activity
+<string name="photo_collage">Photo Collage</string>
+<string name="collage_grid">Collage Grid</string>
+<string name="remove_bg">Remove BG</string>
+<string name="template">Template</string>
+<string name="photo_edit">Photo Edit</string>
+<string name="remove_background">Remove Background</string>
+<string name="spring_mark_icon">Spring Mark 🔥</string>
+<string name="festival">Festival</string>
+<string name="season">Season</string>
+<string name="birthday">Birthday</string>
+<string name="trending">Trending</string>
+<string name="templates">Templates</string>
+// Collage Grid
+<string name="layout">Layout</string>
+<string name="border">Border</string>
+<string name="background">Background</string>
+<string name="pattern">Pattern</string>
+<string name="get">Get</string>
+<string name="use">Use</string>
+<string name="try_str">Try</string>
+<string name="start">Start</string>
+<string name="solid">Solid</string>
+<string name="gradient">Gradient</string>
+<string name="cancel">Cancel</string>
+<string name="discard_results_title">Discard results?</string>
+<string name="discard_results_description">If you leave now, your masterpiece will be lost forever!</string>
+// Onboarding
+<string name="onboarding1_description">Create stunning collages in seconds!</string>
+<string name="onboarding2_description">Turn photos into eye-catching designs!</string>
+<string name="onboarding3_description">Remove backgrounds instantly with AI!</string>
+<string name="button_next">Next</string>
+//Background removal
+<string name="bg_removal_failed">Background removal failed</string>
+<string name="select">Select</string>
+<string name="close">Close</string>
+<string name="tutorial_brush_eraser">Brush over the target area and use eraser to optimize it</string>
+<string name="tutorial_ai_remove_bg">Automatically scan and cutout in seconds</string>
+<string name="brush_n_eraser">Brush & Eraser</string>
+<string name="ai">AI</string>
+<string name="brush">Brush</string>
+<string name="eraser">Eraser</string>
+<string name="size">Size</string>
+<string name="offset">Offset</string>
+// Splash
+<string name="photo_collage_splash">PHOTO COLLAGE</string>
+&lt;!-- TODO: Remove or change this placeholder text --&gt;
+<string name="hello_blank_fragment">Hello blank fragment</string>
+// Saved
+<string name="saved">Saved</string>
+<string name="share_to">Share to</string>
+</resources>
+
+
+tạo giúp tôi file string các ngôn ngữ này để chuyển ngôn ngữ cho app :
+val languages = listOf(
+LanguageItem("en", "English", R.drawable.icon_english_language),
+LanguageItem("pt", "Portuguese", R.drawable.icon_portuguese_language),
+LanguageItem("id", "Indonesian", R.drawable.indonesian),
+LanguageItem("es", "Spanish", R.drawable.icon_spanish_language),
+LanguageItem("hi", "Hindi", R.drawable.icon_hindi_language),
+LanguageItem("fr", "French", R.drawable.icon_french_language),
+LanguageItem("vi", "Tiếng Việt", R.drawable.icon_vietnamese_language)
+) giữ đúng format file gốc kể cả phần comment, xuống dòng...
+Show more
+tôi có file string/xml cho app android như sau: <resources> <string name="app_name">PhotoEditor</string> // Image picker <string name="camera">Camera</string> <string name="upload_images">Upload images</string> // Filter <string name="ratio">Ratio</string> <string name="crop">Crop</string> <string name="rotate">Rotate</string> <string name="filter">Filter</string> // Language <string name="icon_language_description">Icon Language</string> <string name="language_title">Language</string> <string name="save_language">Save Language</string> // Setting <string name="setting_language">Language</string> <string name="setting_rate_app">Rate app</string> <string name="setting_share_app">Share app</string> <string name="setting_privacy_policy">Privacy Policy</string> <string name="cancel_setting">Cancel setting</string> <string name="setting_title">Setting</string> // Home Activity <string name="photo_collage">Photo Collage</string> <string name="collage_grid">Collage Grid</string> <string name="remove_bg">Remove BG</string> <string name="template">Template</string> <string name="photo_edit">Photo Edit</string> <string name="remove_background">Remove Background</string> <string name="spring_mark_icon">Spring Mark 🔥</string> <string name="festival">Festival</string> <string name="season">Season</string> <string name="birthday">Birthday</string> <string name="trending">Trending</string> <string name="templates">Templates</string> // Collage Grid <string name="layout">Layout</string> <string name="border">Border</string> <string name="background">Background</string> <string name="pattern">Pattern</string> <string name="get">Get</string> <string name="use">Use</string> <string name="try_str">Try</string> <string name="start">Start</string> <string name="solid">Solid</string> <string name="gradient">Gradient</string> <string name="cancel">Cancel</string> <string name="discard_results_title">Discard results?</string> <string name="discard_results_description">If you leave now, your masterpiece will be lost forever!</string> // Onboarding <string name="onboarding1_description">Create stunning collages in seconds!</string> <string name="onboarding2_description">Turn photos into eye-catching designs!</string> <string name="onboarding3_description">Remove backgrounds instantly with AI!</string> <string name="button_next">Next</string> //Background removal <string name="bg_removal_failed">Background removal failed</string> <string name="select">Select</string> <string name="close">Close</string> <string name="tutorial_brush_eraser">Brush over the target area and use eraser to optimize it</string> <string name="tutorial_ai_remove_bg">Automatically scan and cutout in seconds</string> <string name="brush_n_eraser">Brush & Eraser</string> <string name="ai">AI</string> <string name="brush">Brush</string> <string name="eraser">Eraser</string> <string name="size">Size</string> <string name="offset">Offset</string> // Splash <string name="photo_collage_splash">PHOTO COLLAGE</string> &lt;!-- TODO: Remove or change this placeholder text --&gt; <string name="hello_blank_fragment">Hello blank fragment</string> // Saved <string name="saved">Saved</string> <string name="share_to">Share to</string> </resources> tạo giúp tôi file string các ngôn ngữ này để chuyển ngôn ngữ cho app : val languages = listOf( LanguageItem("en", "English", R.drawable.icon_english_language), LanguageItem("pt", "Portuguese", R.drawable.icon_portuguese_language), LanguageItem("id", "Indonesian", R.drawable.indonesian), LanguageItem("es", "Spanish", R.drawable.icon_spanish_language), LanguageItem("hi", "Hindi", R.drawable.icon_hindi_language), LanguageItem("fr", "French", R.drawable.icon_french_language), LanguageItem("vi", "Tiếng Việt", R.drawable.icon_vietnamese_language) ) giữ đúng format file gốc kể cả phần comment, xuống dòng...
+
+Answer
+Dưới đây là bản dịch strings.xml cho các ngôn ngữ bạn yêu cầu, giữ nguyên format, comment, xuống dòng giống file gốc.
+Bạn chỉ cần copy vào đúng thư mục values-<mã_ngôn_ngữ> trong res/ của dự án Android.
+
+Vietnamese (values-vi/strings.xml)
+xml
+<resources>
+<string name="app_name">PhotoEditor</string>
+// Image picker
+<string name="camera">Máy ảnh</string>
+<string name="upload_images">Tải ảnh lên</string>
+// Filter
+<string name="ratio">Tỷ lệ</string>
+<string name="crop">Cắt</string>
+<string name="rotate">Xoay</string>
+<string name="filter">Bộ lọc</string>
+// Language
+<string name="icon_language_description">Biểu tượng ngôn ngữ</string>
+<string name="language_title">Ngôn ngữ</string>
+<string name="save_language">Lưu ngôn ngữ</string>
+// Setting
+<string name="setting_language">Ngôn ngữ</string>
+<string name="setting_rate_app">Đánh giá ứng dụng</string>
+<string name="setting_share_app">Chia sẻ ứng dụng</string>
+<string name="setting_privacy_policy">Chính sách bảo mật</string>
+<string name="cancel_setting">Hủy cài đặt</string>
+<string name="setting_title">Cài đặt</string>
+// Home Activity
+<string name="photo_collage">Ghép ảnh</string>
+<string name="collage_grid">Lưới ghép ảnh</string>
+<string name="remove_bg">Xóa nền</string>
+<string name="template">Mẫu</string>
+<string name="photo_edit">Chỉnh sửa ảnh</string>
+<string name="remove_background">Xóa nền</string>
+<string name="spring_mark_icon">Dấu ấn mùa xuân 🔥</string>
+<string name="festival">Lễ hội</string>
+<string name="season">Mùa</string>
+<string name="birthday">Sinh nhật</string>
+<string name="trending">Xu hướng</string>
+<string name="templates">Các mẫu</string>
+// Collage Grid
+<string name="layout">Bố cục</string>
+<string name="border">Viền</string>
+<string name="background">Nền</string>
+<string name="pattern">Hoa văn</string>
+<string name="get">Nhận</string>
+<string name="use">Sử dụng</string>
+<string name="try_str">Thử</string>
+<string name="start">Bắt đầu</string>
+<string name="solid">Đặc</string>
+<string name="gradient">Chuyển sắc</string>
+<string name="cancel">Hủy</string>
+<string name="discard_results_title">Hủy kết quả?</string>
+<string name="discard_results_description">Nếu bạn rời đi bây giờ, kiệt tác của bạn sẽ mất vĩnh viễn!</string>
+// Onboarding
+<string name="onboarding1_description">Tạo ghép ảnh ấn tượng chỉ trong vài giây!</string>
+<string name="onboarding2_description">Biến ảnh thành thiết kế bắt mắt!</string>
+<string name="onboarding3_description">Xóa nền tức thì bằng AI!</string>
+<string name="button_next">Tiếp theo</string>
+//Background removal
+<string name="bg_removal_failed">Xóa nền thất bại</string>
+<string name="select">Chọn</string>
+<string name="close">Đóng</string>
+<string name="tutorial_brush_eraser">Tô lên vùng cần giữ và dùng tẩy để tối ưu</string>
+<string name="tutorial_ai_remove_bg">Tự động quét và cắt nền chỉ trong vài giây</string>
+<string name="brush_n_eraser">Cọ & Tẩy</string>
+<string name="ai">AI</string>
+<string name="brush">Cọ</string>
+<string name="eraser">Tẩy</string>
+<string name="size">Kích thước</string>
+<string name="offset">Độ lệch</string>
+// Splash
+<string name="photo_collage_splash">GHÉP ẢNH</string>
+<!--  TODO: Remove or change this placeholder text  -->
+<string name="hello_blank_fragment">Xin chào fragment trống</string>
+// Saved
+<string name="saved">Đã lưu</string>
+<string name="share_to">Chia sẻ tới</string>
+</resources>
+Portuguese (values-pt/strings.xml)
+xml
+<resources>
+<string name="app_name">PhotoEditor</string>
+// Image picker
+<string name="camera">Câmera</string>
+<string name="upload_images">Enviar imagens</string>
+// Filter
+<string name="ratio">Proporção</string>
+<string name="crop">Cortar</string>
+<string name="rotate">Girar</string>
+<string name="filter">Filtro</string>
+// Language
+<string name="icon_language_description">Ícone de idioma</string>
+<string name="language_title">Idioma</string>
+<string name="save_language">Salvar idioma</string>
+// Setting
+<string name="setting_language">Idioma</string>
+<string name="setting_rate_app">Avaliar app</string>
+<string name="setting_share_app">Compartilhar app</string>
+<string name="setting_privacy_policy">Política de Privacidade</string>
+<string name="cancel_setting">Cancelar configuração</string>
+<string name="setting_title">Configuração</string>
+// Home Activity
+<string name="photo_collage">Colagem de fotos</string>
+<string name="collage_grid">Grade de colagem</string>
+<string name="remove_bg">Remover fundo</string>
+<string name="template">Modelo</string>
+<string name="photo_edit">Editar foto</string>
+<string name="remove_background">Remover fundo</string>
+<string name="spring_mark_icon">Marca Primavera 🔥</string>
+<string name="festival">Festival</string>
+<string name="season">Estação</string>
+<string name="birthday">Aniversário</string>
+<string name="trending">Em alta</string>
+<string name="templates">Modelos</string>
+// Collage Grid
+<string name="layout">Layout</string>
+<string name="border">Borda</string>
+<string name="background">Fundo</string>
+<string name="pattern">Padrão</string>
+<string name="get">Obter</string>
+<string name="use">Usar</string>
+<string name="try_str">Experimentar</string>
+<string name="start">Começar</string>
+<string name="solid">Sólido</string>
+<string name="gradient">Gradiente</string>
+<string name="cancel">Cancelar</string>
+<string name="discard_results_title">Descartar resultados?</string>
+<string name="discard_results_description">Se você sair agora, sua obra-prima será perdida para sempre!</string>
+// Onboarding
+<string name="onboarding1_description">Crie colagens incríveis em segundos!</string>
+<string name="onboarding2_description">Transforme fotos em designs impressionantes!</string>
+<string name="onboarding3_description">Remova fundos instantaneamente com IA!</string>
+<string name="button_next">Próximo</string>
+//Background removal
+<string name="bg_removal_failed">Falha na remoção do fundo</string>
+<string name="select">Selecionar</string>
+<string name="close">Fechar</string>
+<string name="tutorial_brush_eraser">Passe o pincel na área desejada e use a borracha para otimizar</string>
+<string name="tutorial_ai_remove_bg">Digitalize e recorte automaticamente em segundos</string>
+<string name="brush_n_eraser">Pincel & Borracha</string>
+<string name="ai">IA</string>
+<string name="brush">Pincel</string>
+<string name="eraser">Borracha</string>
+<string name="size">Tamanho</string>
+<string name="offset">Deslocamento</string>
+// Splash
+<string name="photo_collage_splash">COLAGEM DE FOTOS</string>
+<!--  TODO: Remove or change this placeholder text  -->
+<string name="hello_blank_fragment">Olá fragmento em branco</string>
+// Saved
+<string name="saved">Salvo</string>
+<string name="share_to">Compartilhar para</string>
+</resources>
+Indonesian (values-in/strings.xml)
+xml
+<resources>
+<string name="app_name">PhotoEditor</string>
+// Image picker
+<string name="camera">Kamera</string>
+<string name="upload_images">Unggah gambar</string>
+// Filter
+<string name="ratio">Rasio</string>
+<string name="crop">Potong</string>
+<string name="rotate">Putar</string>
+<string name="filter">Filter</string>
+// Language
+<string name="icon_language_description">Ikon Bahasa</string>
+<string name="language_title">Bahasa</string>
+<string name="save_language">Simpan Bahasa</string>
+// Setting
+<string name="setting_language">Bahasa</string>
+<string name="setting_rate_app">Nilai aplikasi</string>
+<string name="setting_share_app">Bagikan aplikasi</string>
+<string name="setting_privacy_policy">Kebijakan Privasi</string>
+<string name="cancel_setting">Batalkan pengaturan</string>
+<string name="setting_title">Pengaturan</string>
+// Home Activity
+<string name="photo_collage">Kolase Foto</string>
+<string name="collage_grid">Grid Kolase</string>
+<string name="remove_bg">Hapus BG</string>
+<string name="template">Template</string>
+<string name="photo_edit">Edit Foto</string>
+<string name="remove_background">Hapus Latar Belakang</string>
+<string name="spring_mark_icon">Spring Mark 🔥</string>
+<string name="festival">Festival</string>
+<string name="season">Musim</string>
+<string name="birthday">Ulang Tahun</string>
+<string name="trending">Tren</string>
+<string name="templates">Template</string>
+// Collage Grid
+<string name="layout">Tata Letak</string>
+<string name="border">Bingkai</string>
+<string name="background">Latar Belakang</string>
+<string name="pattern">Pola</string>
+<string name="get">Dapatkan</string>
+<string name="use">Gunakan</string>
+<string name="try_str">Coba</string>
+<string name="start">Mulai</string>
+<string name="solid">Solid</string>
+<string name="gradient">Gradien</string>
+<string name="cancel">Batal</string>
+<string name="discard_results_title">Buang hasil?</string>
+<string name="discard_results_description">Jika Anda keluar sekarang, karya Anda akan hilang selamanya!</string>
+// Onboarding
+<string name="onboarding1_description">Buat kolase menakjubkan dalam hitungan detik!</string>
+<string name="onboarding2_description">Ubah foto menjadi desain menarik!</string>
+<string name="onboarding3_description">Hapus latar belakang seketika dengan AI!</string>
+<string name="button_next">Berikutnya</string>
+//Background removal
+<string name="bg_removal_failed">Penghapusan latar belakang gagal</string>
+<string name="select">Pilih</string>
+<string name="close">Tutup</string>
+<string name="tutorial_brush_eraser">Sikat area target dan gunakan penghapus untuk mengoptimalkan</string>
+<string name="tutorial_ai_remove_bg">Pindai dan potong otomatis dalam hitungan detik</string>
+<string name="brush_n_eraser">Kuas & Penghapus</string>
+<string name="ai">AI</string>
+<string name="brush">Kuas</string>
+<string name="eraser">Penghapus</string>
+<string name="size">Ukuran</string>
+<string name="offset">Offset</string>
+// Splash
+<string name="photo_collage_splash">KOLASE FOTO</string>
+<!--  TODO: Remove or change this placeholder text  -->
+<string name="hello_blank_fragment">Halo fragmen kosong</string>
+// Saved
+<string name="saved">Tersimpan</string>
+<string name="share_to">Bagikan ke</string>
+</resources>
+Spanish (values-es/strings.xml)
+xml
+<resources>
+<string name="app_name">PhotoEditor</string>
+// Image picker
+<string name="camera">Cámara</string>
+<string name="upload_images">Subir imágenes</string>
+// Filter
+<string name="ratio">Relación</string>
+<string name="crop">Recortar</string>
+<string name="rotate">Girar</string>
+<string name="filter">Filtro</string>
+// Language
+<string name="icon_language_description">Icono de idioma</string>
+<string name="language_title">Idioma</string>
+<string name="save_language">Guardar idioma</string>
+// Setting
+<string name="setting_language">Idioma</string>
+<string name="setting_rate_app">Calificar app</string>
+<string name="setting_share_app">Compartir app</string>
+<string name="setting_privacy_policy">Política de Privacidad</string>
+<string name="cancel_setting">Cancelar configuración</string>
+<string name="setting_title">Configuración</string>
+// Home Activity
+<string name="photo_collage">Collage de fotos</string>
+<string name="collage_grid">Cuadrícula de collage</string>
+<string name="remove_bg">Eliminar fondo</string>
+<string name="template">Plantilla</string>
+<string name="photo_edit">Editar foto</string>
+<string name="remove_background">Eliminar fondo</string>
+<string name="spring_mark_icon">Marca de Primavera 🔥</string>
+<string name="festival">Festival</string>
+<string name="season">Temporada</string>
+<string name="birthday">Cumpleaños</string>
+<string name="trending">Tendencias</string>
+<string name="templates">Plantillas</string>
+// Collage Grid
+<string name="layout">Diseño</string>
+<string name="border">Borde</string>
+<string name="background">Fondo</string>
+<string name="pattern">Patrón</string>
+<string name="get">Obtener</string>
+<string name="use">Usar</string>
+<string name="try_str">Probar</string>
+<string name="start">Comenzar</string>
+<string name="solid">Sólido</string>
+<string name="gradient">Gradiente</string>
+<string name="cancel">Cancelar</string>
+<string name="discard_results_title">¿Descartar resultados?</string>
+<string name="discard_results_description">¡Si sales ahora, tu obra maestra se perderá para siempre!</string>
+// Onboarding
+<string name="onboarding1_description">¡Crea collages impresionantes en segundos!</string>
+<string name="onboarding2_description">¡Convierte fotos en diseños llamativos!</string>
+<string name="onboarding3_description">¡Elimina fondos al instante con IA!</string>
+<string name="button_next">Siguiente</string>
+//Background removal
+<string name="bg_removal_failed">Eliminación de fondo fallida</string>
+<string name="select">Seleccionar</string>
+<string name="close">Cerrar</string>
+<string name="tutorial_brush_eraser">Pinta sobre el área objetivo y usa el borrador para optimizar</string>
+<string name="tutorial_ai_remove_bg">Escanea y recorta automáticamente en segundos</string>
+<string name="brush_n_eraser">Pincel y Borrador</string>
+<string name="ai">IA</string>
+<string name="brush">Pincel</string>
+<string name="eraser">Borrador</string>
+<string name="size">Tamaño</string>
+<string name="offset">Desplazamiento</string>
+// Splash
+<string name="photo_collage_splash">COLLAGE DE FOTOS</string>
+<!--  TODO: Remove or change this placeholder text  -->
+<string name="hello_blank_fragment">Hola fragmento en blanco</string>
+// Saved
+<string name="saved">Guardado</string>
+<string name="share_to">Compartir a</string>
+</resources>
+Hindi (values-hi/strings.xml)
+xml
+<resources>
+<string name="app_name">PhotoEditor</string>
+// Image picker
+<string name="camera">कैमरा</string>
+<string name="upload_images">छवियाँ अपलोड करें</string>
+// Filter
+<string name="ratio">अनुपात</string>
+<string name="crop">क्रॉप</string>
+<string name="rotate">घुमाएँ</string>
+<string name="filter">फ़िल्टर</string>
+// Language
+<string name="icon_language_description">भाषा आइकन</string>
+<string name="language_title">भाषा</string>
+<string name="save_language">भाषा सहेजें</string>
+// Setting
+<string name="setting_language">भाषा</string>
+<string name="setting_rate_app">ऐप रेट करें</string>
+<string name="setting_share_app">ऐप साझा करें</string>
+<string name="setting_privacy_policy">गोपनीयता नीति</string>
+<string name="cancel_setting">सेटिंग रद्द करें</string>
+<string name="setting_title">सेटिंग</string>
+// Home Activity
+<string name="photo_collage">फोटो कोलाज</string>
+<string name="collage_grid">कोलाज ग्रिड</string>
+<string name="remove_bg">पृष्ठभूमि हटाएँ</string>
+<string name="template">टेम्पलेट</string>
+<string name="photo_edit">फोटो संपादित करें</string>
+<string name="remove_background">पृष्ठभूमि हटाएँ</string>
+<string name="spring_mark_icon">स्प्रिंग मार्क 🔥</string>
+<string name="festival">त्योहार</string>
+<string name="season">मौसम</string>
+<string name="birthday">जन्मदिन</string>
+<string name="trending">रुझान</string>
+<string name="templates">टेम्पलेट्स</string>
+// Collage Grid
+<string name="layout">लेआउट</string>
+<string name="border">सीमा</string>
+<string name="background">पृष्ठभूमि</string>
+<string name="pattern">पैटर्न</string>
+<string name="get">प्राप्त करें</string>
+<string name="use">उपयोग करें</string>
+<string name="try_str">आजमाएं</string>
+<string name="start">शुरू करें</string>
+<string name="solid">ठोस</string>
+<string name="gradient">ग्रेडिएंट</string>
+<string name="cancel">रद्द करें</string>
+<string name="discard_results_title">परिणाम छोड़ें?</string>
+<string name="discard_results_description">यदि आप अभी छोड़ते हैं, तो आपकी उत्कृष्ट कृति हमेशा के लिए खो जाएगी!</string>
+// Onboarding
+<string name="onboarding1_description">कुछ ही सेकंड में शानदार कोलाज बनाएं!</string>
+<string name="onboarding2_description">फोटो को आकर्षक डिज़ाइन में बदलें!</string>
+<string name="onboarding3_description">AI के साथ तुरंत पृष्ठभूमि हटाएं!</string>
+<string name="button_next">अगला</string>
+//Background removal
+<string name="bg_removal_failed">पृष्ठभूमि हटाना विफल</string>
+<string name="select">चुनें</string>
+<string name="close">बंद करें</string>
+<string name="tutorial_brush_eraser">लक्ष्य क्षेत्र पर ब्रश करें और अनुकूलित करने के लिए इरेज़र का उपयोग करें</string>
+<string name="tutorial_ai_remove_bg">स्वचालित रूप से सेकंड में स्कैन और कटआउट करें</string>
+<string name="brush_n_eraser">ब्रश और इरेज़र</string>
+<string name="ai">एआई</string>
+<string name="brush">ब्रश</string>
+<string name="eraser">इरेज़र</string>
+<string name="size">आकार</string>
+<string name="offset">ऑफसेट</string>
+// Splash
+<string name="photo_collage_splash">फोटो कोलाज</string>
+<!--  TODO: Remove or change this placeholder text  -->
+<string name="hello_blank_fragment">नमस्ते ब्लैंक फ्रैगमेंट</string>
+// Saved
+<string name="saved">सहेजा गया</string>
+<string name="share_to">साझा करें</string>
+</resources>
+French (values-fr/strings.xml)
+xml
+<resources>
+<string name="app_name">PhotoEditor</string>
+// Image picker
+<string name="camera">Appareil photo</string>
+<string name="upload_images">Télécharger des images</string>
+// Filter
+<string name="ratio">Ratio</string>
+<string name="crop">Rogner</string>
+<string name="rotate">Faire pivoter</string>
+<string name="filter">Filtre</string>
+// Language
+<string name="icon_language_description">Icône de langue</string>
+<string name="language_title">Langue</string>
+<string name="save_language">Enregistrer la langue</string>
+// Setting
+<string name="setting_language">Langue</string>
+<string name="setting_rate_app">Noter l'application</string>
+<string name="setting_share_app">Partager l'application</string>
+<string name="setting_privacy_policy">Politique de confidentialité</string>
+<string name="cancel_setting">Annuler le paramètre</string>
+<string name="setting_title">Paramètre</string>
+// Home Activity
+<string name="photo_collage">Collage photo</string>
+<string name="collage_grid">Grille de collage</string>
+<string name="remove_bg">Supprimer le fond</string>
+<string name="template">Modèle</string>
+<string name="photo_edit">Éditer la photo</string>
+<string name="remove_background">Supprimer le fond</string>
+<string name="spring_mark_icon">Marque du printemps 🔥</string>
+<string name="festival">Festival</string>
+<string name="season">Saison</string>
+<string name="birthday">Anniversaire</string>
+<string name="trending">Tendance</string>
+<string name="templates">Modèles</string>
+// Collage Grid
+<string name="layout">Disposition</string>
+<string name="border">Bordure</string>
+<string name="background">Fond</string>
+<string name="pattern">Motif</string>
+<string name="get">Obtenir</string>
+<string name="use">Utiliser</string>
+<string name="try_str">Essayer</string>
+<string name="start">Démarrer</string>
+<string name="solid">Solide</string>
+<string name="gradient">Dégradé</string>
+<string name="cancel">Annuler</string>
+<string name="discard_results_title">Ignorer les résultats ?</string>
+<string name="discard_results_description">Si vous partez maintenant, votre chef-d'œuvre sera perdu à jamais !</string>
+// Onboarding
+<string name="onboarding1_description">Créez de superbes collages en quelques secondes !</string>
+<string name="onboarding2_description">Transformez vos photos en designs accrocheurs !</string>
+<string name="onboarding3_description">Supprimez les fonds instantanément avec l'IA !</string>
+<string name="button_next">Suivant</string>
+//Background removal
+<string name="bg_removal_failed">Échec de la suppression du fond</string>
+<string name="select">Sélectionner</string>
+<string name="close">Fermer</string>
+<string name="tutorial_brush_eraser">Brossez la zone cible et utilisez la gomme pour optimiser</string>
+<string name="tutorial_ai_remove_bg">Analysez et découpez automatiquement en quelques secondes</string>
+<string name="brush_n_eraser">Brosse & Gomme</string>
+<string name="ai">IA</string>
+<string name="brush">Brosse</string>
+<string name="eraser">Gomme</string>
+<string name="size">Taille</string>
+<string name="offset">Décalage</string>
+// Splash
+<string name="photo_collage_splash">COLLAGE PHOTO</string>
+<!--  TODO: Remove or change this placeholder text  -->
+<string name="hello_blank_fragment">Bonjour fragment vide</string>
+// Saved
+<string name="saved">Enregistré</string>
+<string name="share_to">Partager à</string>
+</resources>
+Nếu bạn cần thêm ngôn ngữ nào khác hoặc muốn file này ở dạng tải về, hãy cho mình biết nhé!
+
+Related
+Làm sao để thêm các bản địa hóa khác nhau cho từng ngôn ngữ
+Có cách nào để tự động hóa quá trình bản địa hóa không
+Làm sao để kiểm tra xem các bản địa hóa đã được áp dụng đúng không
+Có thể sử dụng thư viện nào để quản lý bản địa hóa trong app không
+Làm sao để cập nhật nội dung bản địa hóa khi có thay đổi
+
+
+tôi có file string/xml cho app android như sau: <resources> <string...
